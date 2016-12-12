@@ -30,13 +30,14 @@ for (i = 0; i < locations.length; i++) {
     })(marker, i));
 }}
 
-$(document).ready(function(){
+function prepare_map(){
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: new google.maps.LatLng(-33.92, 151.25),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     infowindow = new google.maps.InfoWindow();
+<<<<<<< HEAD
     //makemap();
 });
 
@@ -49,3 +50,7 @@ function createMarker(placeResult) {
         }
     });
 }
+=======
+    // makemap();
+}
+>>>>>>> de30dea74c37201a2ca6360d606da1e1a7c8ee92
