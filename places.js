@@ -5,10 +5,8 @@ function Places() {
     var mMap = null;
     var mPlacesService = null;
     var mPlaces = [];
-    //var mBaseURL = "https://maps.googleapis.com/maps/api";
-    //var mPlacesURL = "/place/nearbysearch/json";
-    var searchRadius = 5000;//in meters
-    //var apiKey = "AIzaSyDo1DIkPeLxpcT6Q14-m-WSm2dbUdYcZGk";//TODO: should be obfuscated/stored somewhere else
+    var mSearchRadius = 5000;//in meters
+    var mSearchQuery = null;
 
     var response = sampleResponse;
 
@@ -18,26 +16,36 @@ function Places() {
     };
 
     this.search = function (search, location) {
+        mSearchQuery = search;
         var request = createRequest(search,location);
-        console.log("sending request...",request);
-        mPlacesService.nearbySearch(createRequest(search,location),parseResponse);
+        //console.log("sending request...",request);
+        mPlacesService.nearbySearch(request,parseResponse);
     };
 
     function parseResponse(results,status) {
-        console.log("Got response");
-        var resultsArray = response.results;
+        //console.log("Got response");
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i in results) {
+                var placeResult = results[i];//PlaceResult objects
+                if (placeResult.name == mSearchQuery) {
+                    mPlaces.push(placeResult);
 
-        for (var i in resultsArray) {
-            mPlaces.push(resultsArray[i]);//PlaceResult objects
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        place: {
+                            placeId: placeResult.place_id,
+                            location: placeResult.geometry.location
+                        }
+                    });
+                }
+            }
         }
-
-        //TODO:filter results - send to map
     }
 
     function createRequest(search,location) {
         var request = {
             location:location,
-            radius:searchRadius,
+            radius:mSearchRadius,
             name:search
         };
         return request;
@@ -46,8 +54,12 @@ function Places() {
 
 $(document).ready(function () {
     var places = new Places();
-    places.init();
+    places.init(map);
+
+    //TODO: temp - replace will actual search
     var loc = new google.maps.LatLng(33.6361934,-117.7415816);
+    map.setCenter(loc);
+
     places.search("Taco Bell",loc);
     //console.log("Places",places.getPlaces());
 });
