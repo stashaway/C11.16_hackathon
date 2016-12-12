@@ -2,18 +2,9 @@
  * Created by sloan on 12/12/2016.
  */
 $(document).ready(function(){
-    // header();
-
-    // create_image();
     build_page1();
 });
 
-// function header(){
-//     var h1 = $('<h1>', {
-//         "text":'Find Food Fast'
-// });
-//     $('header').append (h1);
-// }
 var image_array = ['burgerking.png','carls.jpg','deltaco.png','innout.png','jackinthebox.png','kfc.png','mcdonalds.png','tacobell.png','wendys.png'];
 
 function build_page1 () {
@@ -35,13 +26,13 @@ function build_page1 () {
             $(div_row).append(div_columns);
         }
     }
-    for (var i = 0; i < image_array.length; i++) {
+    for (var x = 0; x < image_array.length; x++) {
 
         var img = $("<img>", {
-            "src": "images/" + image_array[i],
+            "src": "images/" + image_array[x],
             "class": "img-circle"
         });
-        $('#img' + (i + 1)).append(img);//append each image into row html
+        $('#img' + (x + 1)).append(img);//append each image into row html
 
     }
     var bottom_text = $('<div>', {
@@ -55,16 +46,16 @@ function build_page1 () {
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
 }
 
-function create_page2(){
-    $('#main_body *').remove();
-    var map_container = $('<div id="map">');
-    $('#main_body').append(map_container);
-    var bottom_choices=$('<div id="bottom_buttons">');
-    var button1=$('<button id="switch_directions">');
-    var button2=$('<button id="other_content">');
-    var button3=$('<button id="choose_again">');
-    $('#main_body').append(bottom_choices);
-    $('#bottom_buttons').append(button1, button2, button3);
-}
+// function create_page2(){
+//     $('#main_body *').remove();
+//     var map_container = $('<div id="map">');
+//     $('#main_body').append(map_container);
+//     var bottom_choices=$('<div id="bottom_buttons">');
+//     var button1=$('<button id="switch_directions">');
+//     var button2=$('<button id="other_content">');
+//     var button3=$('<button id="choose_again">');
+//     $('#main_body').append(bottom_choices);
+//     $('#bottom_buttons').append(button1, button2, button3);
+// }
 
 
