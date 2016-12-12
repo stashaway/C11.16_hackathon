@@ -46,5 +46,14 @@ header {
     border: 1px solid black;
     padding: 10px;
     margin: 20px;
-    width:98%;
+    width: 98%;
+}
+.logos_container {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+#map {
+    width: 500px;
+    height: 400px;
 }
