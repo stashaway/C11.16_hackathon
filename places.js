@@ -45,17 +45,17 @@ function Places() {
     }
 }
 
-$(document).ready(function () {
-    var places = new Places();
-    places.init(map);
-
-    //TODO: temp - replace will actual search
-    var loc = new google.maps.LatLng(33.6361934,-117.7415816);
-    map.setCenter(loc);
-
-    places.search("Taco Bell",loc);
-    //console.log("Places",places.getPlaces());
-});
+// $(document).ready(function () {
+//     var places = new Places();
+//     places.init(map);
+//
+//     //TODO: temp - replace will actual search
+//     var loc = new google.maps.LatLng(33.6361934,-117.7415816);
+//     map.setCenter(loc);
+//
+//     places.search("Taco Bell",loc);
+//     //console.log("Places",places.getPlaces());
+// });
 
 var sampleResponse = {
     "html_attributions": [],

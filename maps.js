@@ -37,9 +37,9 @@ function prepare_map(){
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     infowindow = new google.maps.InfoWindow();
-<<<<<<< HEAD
+
     //makemap();
-});
+}
 
 function createMarker(placeResult) {
     var marker = new google.maps.Marker({
@@ -50,7 +50,3 @@ function createMarker(placeResult) {
         }
     });
 }
-=======
-    // makemap();
-}
->>>>>>> de30dea74c37201a2ca6360d606da1e1a7c8ee92

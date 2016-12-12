@@ -61,7 +61,6 @@ function create_page2(button){
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
-
     makemap();
 }
 
