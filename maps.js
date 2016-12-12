@@ -37,5 +37,20 @@ function prepare_map(){
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     infowindow = new google.maps.InfoWindow();
+<<<<<<< HEAD
+    //makemap();
+});
+
+function createMarker(placeResult) {
+    var marker = new google.maps.Marker({
+        map: map,
+        place: {
+            placeId: placeResult.place_id,
+            location: placeResult.geometry.location
+        }
+    });
+}
+=======
     // makemap();
 }
+>>>>>>> de30dea74c37201a2ca6360d606da1e1a7c8ee92
