@@ -23,20 +23,13 @@ function Places() {
     };
 
     function parseResponse(results,status) {
-        //console.log("Got response");
+        console.log("Got response",results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i in results) {
                 var placeResult = results[i];//PlaceResult objects
                 if (placeResult.name == mSearchQuery) {
                     mPlaces.push(placeResult);
-
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        place: {
-                            placeId: placeResult.place_id,
-                            location: placeResult.geometry.location
-                        }
-                    });
+                    createMarker(placeResult);
                 }
             }
         }

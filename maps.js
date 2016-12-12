@@ -39,3 +39,13 @@ $(document).ready(function(){
     infowindow = new google.maps.InfoWindow();
     //makemap();
 });
+
+function createMarker(placeResult) {
+    var marker = new google.maps.Marker({
+        map: map,
+        place: {
+            placeId: placeResult.place_id,
+            location: placeResult.geometry.location
+        }
+    });
+}
