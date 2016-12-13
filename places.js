@@ -58,6 +58,10 @@ function Places() {
             var filteredPlace = places[i];
             createMarker(filteredPlace,mLocation);
         }
+
+        if (places.length == 0) {
+            showNoPlaces(mSearchQuery);
+        }
     }
     
     function filterByDirection(direction,places) {
