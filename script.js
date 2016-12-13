@@ -128,11 +128,14 @@ function set_direction(position) {
     var starting_long = starting_location.longitude;
     var starting_lat = starting_location.latitude;
     var next_long = second_location.longitude;
-    var next_lat = starting_location.latitude;
-    var long_diff = starting_long-next_long;
-    var lat_diff = starting_lat-next_lat;
+    var next_lat = second_location.latitude;
+
+    var long_diff = next_long - starting_long;
+    var lat_diff = next_lat - starting_lat;
+
     console.log("Differences " + long_diff, lat_diff);
-    var bearing = Math.tan(long_diff / lat_diff);
+    //var bearing = Math.tan(long_diff / lat_diff);
+    var bearing = Math.atan2(lat_diff,long_diff) * (180 / Math.PI);
     console.log('bearing is '+ bearing);
     if (isNaN(bearing)) {
         return 0;
