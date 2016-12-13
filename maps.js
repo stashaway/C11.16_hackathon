@@ -43,7 +43,7 @@ function clearMarkers() {
     directions.clearDirectionsPoly();
 }
 
-function createMarkerInfo(title,details,button) {
+function createMarkerInfo(title,details) {
     var infoDiv = $("<div>");
 
     if (title) {
@@ -58,24 +58,6 @@ function createMarkerInfo(title,details,button) {
             text:details
         });
         infoDiv.append(address);
-    }
-
-    if (button) {
-        var info = $("<button>",{
-            class:"btn btn-default",
-            type:"button",
-            text:button
-        });
-
-        info.on("click",function () {
-            var destination = placeResult.geometry.location;
-            //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
-            directions.clearDirectionsPoly();
-            directions.showDirection(origin,destination);
-            infowindow.close();
-        });
-
-        infoDiv.append(info);
     }
 
     return infoDiv;
@@ -109,7 +91,24 @@ function createMarker(placeResult,origin) {
 
     google.maps.event.addListener(marker,"click", (function (marker,placeResult) {
         return function () {
-            var infodiv = createMarkerInfo(placeResult.name,placeResult.vicinity,"Directions");
+            var infodiv = createMarkerInfo(placeResult.name,placeResult.vicinity);
+
+                var info = $("<button>",{
+                    class:"btn btn-default",
+                    type:"button",
+                    text:"Directions"
+                });
+
+                info.on("click",function () {
+                    var destination = placeResult.geometry.location;
+                    //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
+                    directions.clearDirectionsPoly();
+                    directions.showDirection(origin,destination);
+                    infowindow.close();
+                });
+
+                infodiv.append(info);
+
 
             infowindow.setContent(infodiv[0]);
             infowindow.open(map,marker);
