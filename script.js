@@ -145,11 +145,11 @@ function set_direction(position) {
 
 }
 
-function view_youtube_ads(button) {
+function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
     console.log('hello');
-    $('.main_body *').remove();
-    $('.textAtBottom').remove();
-    $.ajax({
+    $('.main_body *').toggle();
+    // $('.textAtBottom').hide();
+    $.ajax({ // ajax
         dataType: 'json',
         method: 'POST',
         data: {
@@ -159,17 +159,31 @@ function view_youtube_ads(button) {
 
         },
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
-        success: function (result) {
+        success: function (result){
+            var new_div_page3 =$('<div>',{
+                "class":"container_page3"
+            });
             var iframe = $('<iframe>', {
                "class":"advertising_video",//todo:fix some of the logos not working when click for videos.
                 "src":"https://www.youtube.com/embed/" + result.video[0].id
         });
-            $('.main_body').append(iframe);
+            var button =$('<button>').text('Go back');
+            button.click(function(){
+                go_back();
+            });
+            new_div_page3.append(iframe, button);
+            $('.main_body').append(new_div_page3);
+            // $('.main_body').append(iframe);
+            // $('.main_body').append(button);
             // <iframe width="560" height="315" src="https://www.youtube.com/embed/_UUmpogN-RM" frameborder="0" allowfullscreen></iframe>
 
             console.log('AJAX Success function called, with the following result:', result);
         }
     });
 }
-
+function go_back(){
+    console.log('back button called');
+    $('.container_page3').remove();
+    $('.main_body *').toggle();
+}
 
