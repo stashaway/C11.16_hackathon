@@ -132,6 +132,7 @@ function build_page2_1(direction, button) {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
+    setCurrentLocation(loc);
     my_map.init(map,loc);
     map.setCenter(loc);
     my_map.search(food_name, loc, direction);
