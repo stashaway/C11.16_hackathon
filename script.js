@@ -5,7 +5,8 @@ $(document).ready(function(){
     build_page1();
     $('.logos_container div').click(function(){
         build_page2($(this).attr('data-imgindex'));
-    })
+    });
+    // $('#other_content').click(view_youtube_ads);
 });
 
 var image_array = [
@@ -78,6 +79,10 @@ function build_page2(button){
     var bottom_choices=$('<div id="bottom_buttons">');
     var button1=$('<button id="switch_directions">').text('Switch Direction');
     var button2=$('<button id="other_content">').text('Other Content');
+    button2.click(function(){
+        console.log('button- '+button);
+        view_youtube_ads(button);
+    });//add click handler for button2
     var button3=$('<button id="choose_again">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
@@ -88,5 +93,33 @@ function build_page2(button){
     map.setCenter(loc);
     my_map.search(food_name, loc);
 }
+
+function view_youtube_ads(button) {
+    console.log('hello');
+    $('.main_body *').remove();
+    $('.textAtBottom').remove();
+    $.ajax({
+        dataType: 'json',
+        method: 'POST',
+        data: {
+            q:image_array[button].name+" ad USA",
+            maxResults:1
+        },
+        url: 'http://s-apis.learningfuze.com/hackathon/youtube/search.php',
+        success: function (result) {
+            var iframe = $('<iframe>', {
+               "class":"advertising_video",//todo:fix some of the logos not working when click for videos.
+                "src":"https://www.youtube.com/embed/" + result.video[0].id
+        });
+            $('.main_body').append(iframe);
+            // <iframe width="560" height="315" src="https://www.youtube.com/embed/_UUmpogN-RM" frameborder="0" allowfullscreen></iframe>
+
+            console.log('AJAX Success function called, with the following result:', result);
+        }
+    });
+}
+
+
+
 
 
