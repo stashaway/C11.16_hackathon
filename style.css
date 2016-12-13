@@ -98,6 +98,11 @@ header {
     top: 0;
     left: 0;
 }
+/*modal box*/
+.modal-content {
+    background-color: #337ab7;
+    color:white;
+}
 
 @media screen and (orientation: landscape) and (max-width: 668px) {
     .logos_container{
@@ -115,6 +120,14 @@ header {
         position: absolute;
         top: 0;
         left: 0;
+    }
+    header {
+        display: none;
+    }
+    #map{
+        width: 100%;
+        height: 80vh;
+        position:relative;
     }
 }
 
