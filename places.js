@@ -2,7 +2,7 @@
  * Created by baultik on 12/12/16.
  */
 /**
- * Places contructor. Handles searching for places based on a search query.
+ * Places constructor. Handles searching for places based on a search query.
  * @constructor
  */
 function Places() {
@@ -35,12 +35,12 @@ function Places() {
      * @param location Where you are
      * @param bearing What direction you're going in degrees
      */
-    this.search = function (search, location,bearing) {
+    this.search = function (search, location, bearing) {
         mSearchQuery = search;
         mLocation = location;
         mBearing = bearing;
-        var request = createRequest(search,location);
-        mPlacesService.nearbySearch(request,parseResponse);
+        var request = createRequest(search, location);
+        mPlacesService.nearbySearch(request, parseResponse);
     };
     /**
      * Switch direction to it's opposite ie North to South
@@ -63,18 +63,18 @@ function Places() {
         }
         mHeading = direction;
         clearMarkers();
-        populateMap(mHeading,mAllPlaces);
+        populateMap(mHeading, mAllPlaces);
     };
     /**
      * Populate the map with the places
      * @param direction The direction to filter results
      * @param places The matching places
      */
-    function populateMap(direction,places) {
-        places = filterByDirection(direction,places);
+    function populateMap(direction, places) {
+        places = filterByDirection(direction, places);
         for (var i in places) {
             var filteredPlace = places[i];
-            createMarker(filteredPlace,mLocation);
+            createMarker(filteredPlace, mLocation);
         }
 
         if (places.length == 0) {
@@ -88,7 +88,7 @@ function Places() {
      * @param places The matching places
      * @returns {Array} An array of filtered places
      */
-    function filterByDirection(direction,places) {
+    function filterByDirection(direction, places) {
         var output = [];
         for (var i in places) {
             var place = places[i];
@@ -97,16 +97,16 @@ function Places() {
 
             switch (direction) {
                 case mDirection.south:
-                    if (coordinates.lat < center.lat)output.push(place);
+                    if (coordinates.lat < center.lat) output.push(place);
                     break;
                 case mDirection.east:
-                    if (coordinates.lng > center.lng)output.push(place);
+                    if (coordinates.lng > center.lng) output.push(place);
                     break;
                 case mDirection.west:
-                    if (coordinates.lng < center.lng)output.push(place);
+                    if (coordinates.lng < center.lng) output.push(place);
                     break;
                 default:
-                    if (coordinates.lat > center.lat)output.push(place);
+                    if (coordinates.lat > center.lat) output.push(place);
                     break;
             }
         }
@@ -138,11 +138,11 @@ function Places() {
 
     /**
      * Parse the response from the places api
-     * @param results The results array containing {@link PlaceResult} objects
+     * @param results The results array containing PlaceResult objects
      * @param status The status of the search
      */
-    function parseResponse(results,status) {
-        console.log("Got response",results);
+    function parseResponse(results, status) {
+        console.log("Got response", results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i in results) {
                 var placeResult = results[i];//PlaceResult objects
@@ -153,7 +153,7 @@ function Places() {
             //keep a copy of all unfiltered matches
             mAllPlaces = mPlaces.slice();
             mHeading = translateBearing(mBearing);
-            populateMap(mHeading,mPlaces);
+            populateMap(mHeading, mPlaces);
         }
     }
 
@@ -163,12 +163,11 @@ function Places() {
      * @param location The location to search around
      * @returns {{location: *, radius: number, name: *}}
      */
-    function createRequest(search,location) {
-        var request = {
-            location:location,
-            radius:mSearchRadius,
-            name:search
+    function createRequest(search, location) {
+        return {
+            location: location,
+            radius: mSearchRadius,
+            name: search
         };
-        return request;
     }
 }
