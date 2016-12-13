@@ -3,12 +3,13 @@
  */
 $(document).ready(function(){
     build_page1();
-    $('.logos_container div.col-xs-4').click(function(){
+    $('.main_body').on('click','.logos_container div.col-xs-4',function(){
         build_page2($(this).attr('data-imgindex'));
     });
     navigator.geolocation.getCurrentPosition(function(position) {
         starting_location=position.coords;
     });
+    $('header').click(build_page1);
 });
 var starting_location;
 var second_location;
