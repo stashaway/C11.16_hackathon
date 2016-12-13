@@ -23,7 +23,7 @@ $(document).ready(function(){
     navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
     });
-    $('header').click(build_page1);
+
 });
 
 var starting_location;
@@ -40,7 +40,7 @@ var image_array = [
     {image: 'innout.jpg',
      name: "In-N-Out Burger"},
     {image: 'jackinthebox.jpg',
-     name: "Jack In The Box"},
+     name: "Jack in the Box"},
     {image: 'kfc.jpg',
      name: "KFC"},
     {image: 'mcdonalds.jpg',
@@ -49,7 +49,7 @@ var image_array = [
      name: "Taco Bell"},
     {image: 'wendys.jpg',
      name: "Wendy's"}
-    ];
+];
 
 function build_page1 () {
     $('.main_body *').remove();
@@ -97,6 +97,7 @@ function build_page2(button) {
         build_page2_1(direction, button);
     });
 }
+
 function build_page2_1(direction, button) {
     var dpanel = $("<div>",{
         id: "directionsPanel"
@@ -123,6 +124,7 @@ function build_page2_1(direction, button) {
     map.setCenter(loc);
     my_places.search(food_name, loc, direction);
 }
+
 function set_direction(position) {
     second_location = position.coords;
     var starting_long = starting_location.longitude;
@@ -156,20 +158,20 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result){
             var iframe = $('<iframe>', {
-               "class" : "advertising_video",
-                "src" : "https://www.youtube.com/embed/" + result.video[0].id
+               "class" : "advertising_video"
+                // "src" : "https://www.youtube.com/embed/" + result.video[0].id
         });
             var modal_h4 = $('<h3>',{
                 "class" : "modal-title",
                 "text":result.video[0].title
             });
-
             console.log('AJAX Success function called, with the following result:', result);
             //modal area
             $('.modal-body *').remove();
-            $('.modal-body').append(iframe);
             $('.modal-header h3').remove();
+            $('.modal-body').append(iframe);
             $('.modal-header').append(modal_h4);
+            autoPlayYouTubeModal("https://www.youtube.com/embed/" + result.video[0].id);
             var test = result.video[0].title;
             console.log('the title is :' + test);
             //modal area
@@ -177,4 +179,8 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
     });
 }
 
-
+function autoPlayYouTubeModal(source) {
+        var theModal = $('#myModal iframe'),
+            videoSRCauto = source + "?autoplay=1";
+        $(theModal).attr('src', videoSRCauto);
+}
