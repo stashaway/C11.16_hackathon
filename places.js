@@ -1,6 +1,10 @@
 /**
  * Created by baultik on 12/12/16.
  */
+/**
+ * Places contructor. Handles searching for places based on a search query.
+ * @constructor
+ */
 function Places() {
     var mMap = null;
     var mPlacesService = null;
@@ -17,12 +21,20 @@ function Places() {
     var mLocation = null;
     var mBearing = null;
     var mHeading = null;
-
+    /**
+     * Initialize Places service
+     * @param map
+     */
     this.init = function (map) {
         mMap = map;
         mPlacesService = new google.maps.places.PlacesService(mMap);
     };
-
+    /**
+     * Search for a place
+     * @param search The search query
+     * @param location Where you are
+     * @param bearing What direction you're going in degrees
+     */
     this.search = function (search, location,bearing) {
         mSearchQuery = search;
         mLocation = location;
@@ -96,13 +108,13 @@ function Places() {
         }
 
         if (bearing < 45 || bearing >= 315) {
-            return mDirection.north;
-        } else if (bearing >= 45 && bearing < 135) {
             return mDirection.east;
+        } else if (bearing >= 45 && bearing < 135) {
+            return mDirection.north;
         } else if (bearing >= 135 && bearing < 225) {
-            return mDirection.south;
-        } else if (bearing >= 225 && bearing < 315) {
             return mDirection.west;
+        } else if (bearing >= 225 && bearing < 315) {
+            return mDirection.south;
         }
         return null;
     }
