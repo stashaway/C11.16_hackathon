@@ -36,6 +36,7 @@ var image_array = [
     ];
 
 function build_page1 () {
+    $('.main_body *').remove();
     var div_container = $('<div>', {
         "class": "logos_container"
     });
@@ -70,7 +71,7 @@ function build_page1 () {
     var first_h3 = $('<h3>').text('We will show you locations');
     var second_h3 = $('<h3>').text('in front of you');
 
-    $('body').append(bottom_text);
+    $('.main_body').append(bottom_text);
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
 }
 
@@ -82,7 +83,7 @@ function build_page2(button) {
 }
 function build_page2_1(direction, button) {
     $('.main_body *').remove();
-    $('.textAtBottom').remove();
+    // $('.textAtBottom').remove();
     var food_name=image_array[button].name;
     var map_container = $('<div id="map">');
     $('.main_body').append(map_container);
@@ -92,7 +93,20 @@ function build_page2_1(direction, button) {
     var button3=$('<button id="choose_again">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
-    // $('#bottom_buttons button').click(function);
+    // $('#bottom_buttons button').click(function(){
+    //     console.log(this.id);
+    //     switch(this.id) {
+    //         case "switch_directions":
+    //             switch_directions();
+    //             break;
+    //         case "other_content":
+    //             build_page3();
+    //             break;
+    //         case "choose_again":
+    //             build_page1();
+    //             break;
+    //     }
+    // });
     prepare_map();
     var my_map=new Places();
     my_map.init(map);
