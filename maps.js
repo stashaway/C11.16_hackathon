@@ -42,11 +42,40 @@ function prepare_map(){
 }
 
 function createMarker(placeResult) {
+    console.log("marker made");
     var marker = new google.maps.Marker({
         map: map,
+        icon:{
+            url:"images/tacobell.png",
+            scaledSize : new google.maps.Size(30,30,"px","px")
+        },
         place: {
             placeId: placeResult.place_id,
             location: placeResult.geometry.location
         }
     });
+
+    google.maps.event.addListener(marker,"click", (function (marker,placeResult) {
+        return function () {
+            var info = $("<button>",{
+                class:"btn btn-default",
+                type:"button",
+                text:"Directions"
+            });
+
+            info.on("click",function () {
+
+            });
+
+            var title = $("<h6>",{
+                text:"Wendys"
+            });
+
+            var infodiv = $("<div>");
+            infodiv.append(title,info);
+
+            infowindow.setContent(infodiv[0]);
+            infowindow.open(map,marker);
+        }
+    })(marker,placeResult));
 }
