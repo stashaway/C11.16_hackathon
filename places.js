@@ -42,7 +42,9 @@ function Places() {
         var request = createRequest(search,location);
         mPlacesService.nearbySearch(request,parseResponse);
     };
-
+    /**
+     * Switch direction to it's opposite ie North to South
+     */
     this.switchDirection = function () {
         var direction = mDirection.north;
         switch (mHeading) {
@@ -63,7 +65,11 @@ function Places() {
         clearMarkers();
         populateMap(mHeading,mAllPlaces);
     };
-
+    /**
+     * Populate the map with the places
+     * @param direction The direction to filter results
+     * @param places The matching places
+     */
     function populateMap(direction,places) {
         places = filterByDirection(direction,places);
         for (var i in places) {
@@ -75,7 +81,13 @@ function Places() {
             showNoPlaces(mSearchQuery);
         }
     }
-    
+
+    /**
+     * Filters places by a general direction
+     * @param direction The general direction ie North or South
+     * @param places The matching places
+     * @returns {Array} An array of filtered places
+     */
     function filterByDirection(direction,places) {
         var output = [];
         for (var i in places) {
@@ -102,6 +114,11 @@ function Places() {
         return output;
     }
 
+    /**
+     * Translates a bearing in degrees to a general direction
+     * @param bearing The bearing with east being 0deg and west being 180deg
+     * @returns {*} A general direction
+     */
     function translateBearing(bearing) {
         if (bearing < 0) {
             bearing += 360;
@@ -119,6 +136,11 @@ function Places() {
         return null;
     }
 
+    /**
+     * Parse the response from the places api
+     * @param results The results array containing {@link PlaceResult} objects
+     * @param status The status of the search
+     */
     function parseResponse(results,status) {
         console.log("Got response",results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -135,6 +157,12 @@ function Places() {
         }
     }
 
+    /**
+     * Create a search request
+     * @param search The search query
+     * @param location The location to search around
+     * @returns {{location: *, radius: number, name: *}}
+     */
     function createRequest(search,location) {
         var request = {
             location:location,
