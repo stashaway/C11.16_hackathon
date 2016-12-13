@@ -157,7 +157,9 @@ function view_youtube_ads(button) {
         method: 'POST',
         data: {
             q:image_array[button].name+" ad USA",
-            maxResults:1
+            maxResults:1,
+            type: 'video'
+
         },
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result) {
