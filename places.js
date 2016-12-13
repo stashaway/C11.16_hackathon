@@ -5,10 +5,14 @@ function Places() {
     var mMap = null;
     var mPlacesService = null;
     var mPlaces = [];
-    var mSearchRadius = 5000;//in meters
+    var mSearchRadius = 15000;//in meters
     var mSearchQuery = null;
-
-    var response = sampleResponse;
+    var mDirection = {
+        north:"north",
+        south:"south",
+        east:"east",
+        west:"west"
+    };
 
     this.init = function (map) {
         mMap = map;
@@ -21,6 +25,32 @@ function Places() {
         //console.log("sending request...",request);
         mPlacesService.nearbySearch(request,parseResponse);
     };
+    
+    function filterByDirection(direction,places) {
+        var output = [];
+        for (var i in places) {
+            var place = places[i];
+            var coordinates = place.geometry.location.toJSON();
+            var center = mMap.getCenter().toJSON();//TODO:get current location
+
+            switch (direction) {
+                case mDirection.south:
+                    if (coordinates.lat < center.lat)output.push(place);
+                    break;
+                case mDirection.east:
+                    if (coordinates.lng > center.lng)output.push(place);
+                    break;
+                case mDirection.west:
+                    if (coordinates.lat < center.lat)output.push(place);
+                    break;
+                default:
+                    if (coordinates.lat > center.lat)output.push(place);
+                    break;
+            }
+        }
+
+        return output;
+    }
 
     function parseResponse(results,status) {
         console.log("Got response",results);
@@ -28,9 +58,15 @@ function Places() {
             for (var i in results) {
                 var placeResult = results[i];//PlaceResult objects
                 if (placeResult.name == mSearchQuery) {
-                    mPlaces.push(placeResult);
-                    createMarker(placeResult);
+                    mPlaces.push(placeResult);//store all results matching exactly the search query
                 }
+            }
+
+            //TODO: get filter mDirection
+            var filtered = filterByDirection(mDirection.south,mPlaces);
+            for (var i in filtered) {
+                var filteredPlace = filtered[i];
+                createMarker(filteredPlace);
             }
         }
     }
@@ -45,18 +81,18 @@ function Places() {
     }
 }
 
-$(document).ready(function () {
-    prepare_map();
-    var places = new Places();
-    places.init(map);
-
-    //TODO: temp - replace will actual search
-    var loc = new google.maps.LatLng(33.6361934,-117.7415816);
-    map.setCenter(loc);
-
-    places.search("Taco Bell",loc);
-    //console.log("Places",places.getPlaces());
-});
+// $(document).ready(function () {
+//     prepare_map();
+//     var places = new Places();
+//     places.init(map);
+//
+//     //TODO: temp - replace will actual search
+//     var loc = new google.maps.LatLng(33.6361934,-117.7415816);
+//     map.setCenter(loc);
+//
+//     places.search("Taco Bell",loc);
+//     //console.log("Places",places.getPlaces());
+// });
 
 var sampleResponse = {
     "html_attributions": [],
