@@ -159,7 +159,7 @@ function view_youtube_ads(button) {
             q:image_array[button].name+" ad USA",
             maxResults:1
         },
-        url: 'http://s-apis.learningfuze.com/hackathon/youtube/search.php',
+        url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result) {
             var iframe = $('<iframe>', {
                "class":"advertising_video",//todo:fix some of the logos not working when click for videos.
