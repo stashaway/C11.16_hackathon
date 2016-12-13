@@ -46,7 +46,7 @@ function Directions() {
     /**
      * Clears the route polyline on the map
      */
-    this.clearDirectionsPoly = function () {
+    this.clearRoute = function () {
         mDirectionDisplay.setMap(null);
     };
     /**

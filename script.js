@@ -111,14 +111,14 @@ function build_page2_1(direction, button) {
     var button3 = $('<button id = "choose_again" class = "btn btn-warning btn-sm">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
-    prepare_map();
+    prepareMap();
     my_places = new Places();
-    prepare_map();
+    prepareMap();
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
-    setCurrentLocation(loc);
+    showCurrentLocation(loc);
     my_places.init(map,loc);
     map.setCenter(loc);
     my_places.search(food_name, loc, direction);
