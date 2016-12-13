@@ -88,11 +88,7 @@ header {
     background-color: white;
     text-align: center;
 }
-@media screen and (min-width: 500px) {
-    .blocker{
-        display:inherit;
-    }
-}
+
 .container_page3 {
     z-index: 800;
     background-color: white;
@@ -101,4 +97,34 @@ header {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+@media screen and (orientation: landscape) and (max-width: 668px) {
+    .logos_container{
+        margin-top: 10px;
+    }
+    header img {
+        /*width: 60%;*/
+        height: 100%;
+    }
+    .container_page3 {
+        z-index: 800;
+        background-color: white;
+        /*height: 100vh;*/
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+@media screen and (min-width: 500px) and (orientation: portrait) {
+    .blocker{
+        display:inherit;
+    }
+}
+@media screen and (min-width: 668px) and (orientation: landscape) {
+    .blocker{
+        display:inherit;
+    }
 }
