@@ -14,6 +14,7 @@ var map;
 // function populate_locations_array(restaurant_name,)
 var directions;
 var marker, i;
+var markers = [];
 function makemap() {
 for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
@@ -40,7 +41,13 @@ function prepare_map(){
     //makemap();
 }
 
-//https://maps.google.com/maps?ll=33.66964,-117.762779&z=17&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=9583901462909674968
+function clearMarkers() {
+    for (var i in markers) {
+        var marker = markers[i];
+        marker.setMap(null);
+    }
+    markers = [];
+}
 
 function createMarker(placeResult,origin) {
     console.log(placeResult);
@@ -65,6 +72,8 @@ function createMarker(placeResult,origin) {
             location: placeResult.geometry.location
         }
     });
+
+    markers.push(marker);
 
     google.maps.event.addListener(marker,"click", (function (marker,placeResult) {
         return function () {
