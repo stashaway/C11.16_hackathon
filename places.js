@@ -41,7 +41,7 @@ function Places() {
                     if (coordinates.lng > center.lng)output.push(place);
                     break;
                 case mDirection.west:
-                    if (coordinates.lat < center.lat)output.push(place);
+                    if (coordinates.lng < center.lng)output.push(place);
                     break;
                 default:
                     if (coordinates.lat > center.lat)output.push(place);
@@ -62,10 +62,10 @@ function Places() {
                 }
             }
 
-            //TODO: get filter mDirection
-            var filtered = filterByDirection(mDirection.south,mPlaces);
-            for (var i in filtered) {
-                var filteredPlace = filtered[i];
+            //TODO: get filter direction
+            mPlaces = filterByDirection(mDirection.west,mPlaces);
+            for (var i in mPlaces) {
+                var filteredPlace = mPlaces[i];
                 createMarker(filteredPlace);
             }
         }

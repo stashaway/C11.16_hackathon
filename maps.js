@@ -12,8 +12,7 @@ var locations = [                   // these will be passed in by variables, not
 var infowindow;
 var map;
 // function populate_locations_array(restaurant_name,)
-
-
+var directions;
 var marker, i;
 function makemap() {
 for (i = 0; i < locations.length; i++) {
@@ -37,12 +36,16 @@ function prepare_map(){
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     infowindow = new google.maps.InfoWindow();
-
+    directions = new Directions();
     //makemap();
 }
 
+//https://maps.google.com/maps?ll=33.66964,-117.762779&z=17&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=9583901462909674968
+
 function createMarker(placeResult) {
     console.log(placeResult);
+    directions.init(map);
+
     var marker = new google.maps.Marker({
         map: map,
         icon:{
@@ -64,7 +67,11 @@ function createMarker(placeResult) {
             });
 
             info.on("click",function () {
-
+                var destination = placeResult.geometry.location;
+                var origin = new google.maps.LatLng(33.6361934,-117.7415816);
+                directions.clearMap();
+                directions.showDirection(origin,destination);
+                infowindow.close();
             });
 
             var title = $("<h6>",{
