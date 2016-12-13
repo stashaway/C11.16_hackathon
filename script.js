@@ -104,6 +104,8 @@ function set_direction(position) {
     var long_diff=starting_long-next_long;
     var lat_diff=starting_lat-next_lat;
     console.log("DIfferences "+long_diff,lat_diff);
-    $('#switch_directions').text(long_diff + '   ' + lat_diff);
+    var bearing = Math.tan(long_diff / lat_diff);
+    console.log('bearing is'+ bearing);
+    $("#switch_directions").text(bearing);
 }
 
