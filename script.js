@@ -40,7 +40,7 @@ var image_array = [
     {image: 'innout.jpg',
      name: "In-N-Out Burger"},
     {image: 'jackinthebox.jpg',
-     name: "Jack In The Box"},
+     name: "Jack in the Box"},
     {image: 'kfc.jpg',
      name: "KFC"},
     {image: 'mcdonalds.jpg',
