@@ -23,7 +23,7 @@ $(document).ready(function(){
     navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
     });
-    $('header').click(build_page1);
+
 });
 
 var starting_location;
@@ -40,7 +40,7 @@ var image_array = [
     {image: 'innout.jpg',
      name: "In-N-Out Burger"},
     {image: 'jackinthebox.jpg',
-     name: "Jack In The Box"},
+     name: "Jack in the Box"},
     {image: 'kfc.jpg',
      name: "KFC"},
     {image: 'mcdonalds.jpg',
@@ -49,7 +49,7 @@ var image_array = [
      name: "Taco Bell"},
     {image: 'wendys.jpg',
      name: "Wendy's"}
-    ];
+];
 
 function build_page1 () {
     $('.main_body *').remove();
@@ -97,6 +97,7 @@ function build_page2(button) {
         build_page2_1(direction, button);
     });
 }
+
 function build_page2_1(direction, button) {
     var dpanel = $("<div>",{
         id: "directionsPanel"
@@ -111,18 +112,19 @@ function build_page2_1(direction, button) {
     var button3 = $('<button id = "choose_again" class = "btn btn-warning btn-sm">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
-    prepare_map();
+    prepareMap();
     my_places = new Places();
-    prepare_map();
+    prepareMap();
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
-    setCurrentLocation(loc);
+    showCurrentLocation(loc);
     my_places.init(map,loc);
     map.setCenter(loc);
     my_places.search(food_name, loc, direction);
 }
+
 function set_direction(position) {
     second_location = position.coords;
     var starting_long = starting_location.longitude;
@@ -156,25 +158,32 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result){
             var iframe = $('<iframe>', {
-               "class" : "advertising_video",
-                "src" : "https://www.youtube.com/embed/" + result.video[0].id
+               "class" : "advertising_video"
+                // "src" : "https://www.youtube.com/embed/" + result.video[0].id
         });
             var modal_h4 = $('<h3>',{
                 "class" : "modal-title",
                 "text":result.video[0].title
             });
-
             console.log('AJAX Success function called, with the following result:', result);
             //modal area
             $('.modal-body *').remove();
-            $('.modal-body').append(iframe);
             $('.modal-header h3').remove();
+            $('.modal-body').append(iframe);
             $('.modal-header').append(modal_h4);
+            autoPlayYouTubeModal("https://www.youtube.com/embed/" + result.video[0].id);
             var test = result.video[0].title;
             console.log('the title is :' + test);
             //modal area
+            $("#myModal").on('hide.bs.modal', function(){
+                $("iframe").attr('src', '');
+            });
         }
     });
 }
 
-
+function autoPlayYouTubeModal(source) {
+        var theModal = $('#myModal iframe'),
+            videoSRCauto = source + "?autoplay=1";
+        $(theModal).attr('src', videoSRCauto);
+}

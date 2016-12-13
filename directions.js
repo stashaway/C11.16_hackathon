@@ -15,7 +15,7 @@ function Directions() {
      * Initialize the Directions Service and Renderer
      * @param map The map to show directions on
      */
-    this.init = function(map) {
+    this.init = function (map) {
         mDirectionService = new google.maps.DirectionsService();
         mDirectionDisplay = new google.maps.DirectionsRenderer({
             suppressMarkers: true
@@ -27,7 +27,7 @@ function Directions() {
      * @param origin Where you are
      * @param destination Where you're going
      */
-    this.showDirection = function(origin,destination) {
+    this.showDirection = function (origin, destination) {
         var request = {
             origin: origin,
             destination: destination,
@@ -37,7 +37,7 @@ function Directions() {
         mDirectionDisplay.setMap(mMap);
         mDirectionDisplay.setPanel(mPanel);
 
-        mDirectionService.route(request, function(result, status) {
+        mDirectionService.route(request, function (result, status) {
             if (status == 'OK') {
                 mDirectionDisplay.setDirections(result);
             }
@@ -46,7 +46,7 @@ function Directions() {
     /**
      * Clears the route polyline on the map
      */
-    this.clearDirectionsPoly = function () {
+    this.clearRoute = function () {
         mDirectionDisplay.setMap(null);
     };
     /**
