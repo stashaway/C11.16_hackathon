@@ -14,6 +14,7 @@ var map;
 // function populate_locations_array(restaurant_name,)
 var directions;
 var marker, i;
+var markers = [];
 function makemap() {
 for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
@@ -37,14 +38,22 @@ function prepare_map(){
     });
     infowindow = new google.maps.InfoWindow();
     directions = new Directions();
+    directions.init(map);
     //makemap();
 }
 
-//https://maps.google.com/maps?ll=33.66964,-117.762779&z=17&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=9583901462909674968
+function clearMarkers() {
+    for (var i in markers) {
+        var marker = markers[i];
+        marker.setMap(null);
+    }
+    markers = [];
+    directions.clearTurnByTurn();
+    directions.clearDirectionsPoly();
+}
 
 function createMarker(placeResult,origin) {
     console.log(placeResult);
-    directions.init(map);
 
     var this_img;
     for (var loop=0; loop < image_array.length; loop++ ){
@@ -66,6 +75,8 @@ function createMarker(placeResult,origin) {
         }
     });
 
+    markers.push(marker);
+
     google.maps.event.addListener(marker,"click", (function (marker,placeResult) {
         return function () {
             var info = $("<button>",{
@@ -77,7 +88,7 @@ function createMarker(placeResult,origin) {
             info.on("click",function () {
                 var destination = placeResult.geometry.location;
                 //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
-                directions.clearMap();
+                directions.clearDirectionsPoly();
                 directions.showDirection(origin,destination);
                 infowindow.close();
             });

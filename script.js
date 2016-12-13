@@ -113,26 +113,41 @@ function build_page2_1(direction, button) {
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
     var my_map=new Places();
+    $('#bottom_buttons button').click(function(){
+        console.log(this.id);
+        switch(this.id) {
+            case "switch_directions":
+                my_map.switchDirection();
+                break;
+            case "other_content":
+                build_page3();
+                break;
+            case "choose_again":
+                build_page1();
+                break;
+        }
+    });
+    prepare_map();
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
     my_map.init(map,loc);
     map.setCenter(loc);
-    my_map.search(food_name, loc);
+    my_map.search(food_name, loc, direction);
 }
 
 
 function set_direction(position) {
     second_location = position.coords;
-    // var starting_long=starting_location.longitude;
-    // var starting_lat=starting_location.latitude;
-    // var next_long=second_location.longitude;
-    // var next_lat=starting_location.latitude;
-    var starting_long=33.630731;
-    var starting_lat=-117.743381;
-    var next_long=33.633238;
-    var next_lat=-117.747019;
+    var starting_long=starting_location.longitude;
+    var starting_lat=starting_location.latitude;
+    var next_long=second_location.longitude;
+    var next_lat=starting_location.latitude;
+    // var starting_long=33.630731;
+    // var starting_lat=-117.743381;
+    // var next_long=33.633238;
+    // var next_lat=-117.747019;
     var long_diff=starting_long-next_long;
     var lat_diff=starting_lat-next_lat;
     console.log("Differences "+long_diff,lat_diff);
