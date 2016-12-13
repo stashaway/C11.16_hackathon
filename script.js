@@ -98,7 +98,7 @@ function build_page2(button) {
 }
 function build_page2_1(direction, button) {
     var dpanel = $("<div>",{
-        id:"directionsPanel"
+        id: "directionsPanel"
     });
     $('.main_body *').remove();
     var food_name = image_array[button].name;
@@ -178,6 +178,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
             button.click(function(){
                 return_to_page2();
             });
+            $('#directionsPanel').toggle();
             new_div_page3.append(iframe, button);
             $('.main_body').append(new_div_page3);
             console.log('AJAX Success function called, with the following result:', result);
@@ -187,5 +188,6 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
 function return_to_page2(){
     console.log('back button called');
     $('.container_page3').remove();
+    $('#directionsPanel').toggle();
 }
 
