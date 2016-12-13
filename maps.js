@@ -1,13 +1,13 @@
 /**
  * Created by sloan on 12/12/2016.
  */
-var locations = [                   // these will be passed in by variables, not hard coded.
-    ['Bondi Beach', -33.890542, 151.274856, 4],
-    ['Coogee Beach', -33.923036, 151.259052, 5],
-    ['Cronulla Beach', -34.028249, 151.157507, 3],
-    ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-    ['Maroubra Beach', -33.950198, 151.259302, 1]
-];
+// var locations = [                   // these will be passed in by variables, not hard coded.
+//     ['Bondi Beach', -33.890542, 151.274856, 4],
+//     ['Coogee Beach', -33.923036, 151.259052, 5],
+//     ['Cronulla Beach', -34.028249, 151.157507, 3],
+//     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+//     ['Maroubra Beach', -33.950198, 151.259302, 1]
+// ];
 
 var infowindow;
 var map;
@@ -31,7 +31,7 @@ for (i = 0; i < locations.length; i++) {
 
 function prepare_map(){
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11,
+        zoom: 12,
         center: new google.maps.LatLng(-33.92, 151.25),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });

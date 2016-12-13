@@ -6,7 +6,21 @@ $(document).ready(function(){
     $('.main_body').on('click','.logos_container div.col-xs-4',function(){
         build_page2($(this).attr('data-imgindex'));
     });
-    navigator.geolocation.getCurrentPosition(function(position) {
+    $('.main_body').on('click','#bottom_buttons button',function(){
+        console.log(this);
+        switch(this.id) {
+            case "switch_directions":
+                switch_directions();
+                break;
+            case "other_content":
+                view_youtube_ads($(this).attr('data-button'));
+                break;
+            case "choose_again":
+                build_page1();
+                break;
+        }
+    });
+    navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
     });
     $('header').click(build_page1);
@@ -16,23 +30,23 @@ var second_location;
 var direction;
 
 var image_array = [
-    {image: 'burgerking.png',
+    {image: 'burgerking.jpg',
      name: 'Burger King'},
     {image: 'carls.jpg',
      name: "Carl's Jr."},
-    {image: 'deltaco.png',
+    {image: 'deltaco.jpg',
      name: "Del Taco"},
-    {image: 'innout.png',
+    {image: 'innout.jpg',
      name: "In-N-Out Burger"},
-    {image: 'jackinthebox.png',
+    {image: 'jackinthebox.jpg',
      name: "Jack In The Box"},
-    {image: 'kfc.png',
+    {image: 'kfc.jpg',
      name: "KFC"},
-    {image: 'mcdonalds.png',
+    {image: 'mcdonalds.jpg',
      name: "McDonald's"},
-    {image: 'tacobell.png',
+    {image: 'tacobell.jpg',
      name: "Taco Bell"},
-    {image: 'wendys.png',
+    {image: 'wendys.jpg',
      name: "Wendy's"}
     ];
 
@@ -92,29 +106,11 @@ function build_page2_1(direction, button) {
     var map_container = $('<div id="map">');
     $('.main_body').append(map_container,dpanel);
     var bottom_choices=$('<div id="bottom_buttons">');
-    var button1=$('<button id="switch_directions">').text('Switch Direction');
-    var button2=$('<button id="other_content">').text('Other Content');
-    button2.click(function(){
-        console.log('button- '+button);
-        view_youtube_ads(button);
-    });//add click handler for button2
-    var button3=$('<button id="choose_again">').text('Choose Again');
+    var button1=$('<button id="switch_directions" class="btn btn-primary btn-lg">').text('Switch Direction');
+    var button2=$('<button id="other_content" class="btn btn-info btn-sm">').text('View YouTube').attr('data-button',button);
+    var button3=$('<button id="choose_again" class="btn btn-warning btn-sm">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
-    // $('#bottom_buttons button').click(function(){
-    //     console.log(this.id);
-    //     switch(this.id) {
-    //         case "switch_directions":
-    //             switch_directions();
-    //             break;
-    //         case "other_content":
-    //             build_page3();
-    //             break;
-    //         case "choose_again":
-    //             build_page1();
-    //             break;
-    //     }
-    // });
     prepare_map();
     var my_map=new Places();
     var loc = {
