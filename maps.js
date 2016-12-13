@@ -1,17 +1,8 @@
 /**
  * Created by sloan on 12/12/2016.
  */
-// var locations = [                   // these will be passed in by variables, not hard coded.
-//     ['Bondi Beach', -33.890542, 151.274856, 4],
-//     ['Coogee Beach', -33.923036, 151.259052, 5],
-//     ['Cronulla Beach', -34.028249, 151.157507, 3],
-//     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-//     ['Maroubra Beach', -33.950198, 151.259302, 1]
-// ];
-
 var infowindow;
 var map;
-// function populate_locations_array(restaurant_name,)
 var directions;
 var marker, i;
 var markers = [];
@@ -22,7 +13,6 @@ for (i = 0; i < locations.length; i++) {
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
         map: map
     });
-
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
             infowindow.setContent(locations[i][0]);
