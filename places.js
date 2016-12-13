@@ -1,6 +1,10 @@
 /**
  * Created by baultik on 12/12/16.
  */
+/**
+ * Places contructor. Handles searching for places based on a search query.
+ * @constructor
+ */
 function Places() {
     var mMap = null;
     var mPlacesService = null;
@@ -17,12 +21,20 @@ function Places() {
     var mLocation = null;
     var mBearing = null;
     var mHeading = null;
-
+    /**
+     * Initialize Places service
+     * @param map
+     */
     this.init = function (map) {
         mMap = map;
         mPlacesService = new google.maps.places.PlacesService(mMap);
     };
-
+    /**
+     * Search for a place
+     * @param search The search query
+     * @param location Where you are
+     * @param bearing What direction you're going in degrees
+     */
     this.search = function (search, location,bearing) {
         mSearchQuery = search;
         mLocation = location;
@@ -30,7 +42,9 @@ function Places() {
         var request = createRequest(search,location);
         mPlacesService.nearbySearch(request,parseResponse);
     };
-
+    /**
+     * Switch direction to it's opposite ie North to South
+     */
     this.switchDirection = function () {
         var direction = mDirection.north;
         switch (mHeading) {
@@ -51,7 +65,11 @@ function Places() {
         clearMarkers();
         populateMap(mHeading,mAllPlaces);
     };
-
+    /**
+     * Populate the map with the places
+     * @param direction The direction to filter results
+     * @param places The matching places
+     */
     function populateMap(direction,places) {
         places = filterByDirection(direction,places);
         for (var i in places) {
@@ -63,7 +81,13 @@ function Places() {
             showNoPlaces(mSearchQuery);
         }
     }
-    
+
+    /**
+     * Filters places by a general direction
+     * @param direction The general direction ie North or South
+     * @param places The matching places
+     * @returns {Array} An array of filtered places
+     */
     function filterByDirection(direction,places) {
         var output = [];
         for (var i in places) {
@@ -90,23 +114,33 @@ function Places() {
         return output;
     }
 
+    /**
+     * Translates a bearing in degrees to a general direction
+     * @param bearing The bearing with east being 0deg and west being 180deg
+     * @returns {*} A general direction
+     */
     function translateBearing(bearing) {
         if (bearing < 0) {
             bearing += 360;
         }
 
         if (bearing < 45 || bearing >= 315) {
-            return mDirection.north;
-        } else if (bearing >= 45 && bearing < 135) {
             return mDirection.east;
+        } else if (bearing >= 45 && bearing < 135) {
+            return mDirection.north;
         } else if (bearing >= 135 && bearing < 225) {
-            return mDirection.south;
-        } else if (bearing >= 225 && bearing < 315) {
             return mDirection.west;
+        } else if (bearing >= 225 && bearing < 315) {
+            return mDirection.south;
         }
         return null;
     }
 
+    /**
+     * Parse the response from the places api
+     * @param results The results array containing {@link PlaceResult} objects
+     * @param status The status of the search
+     */
     function parseResponse(results,status) {
         console.log("Got response",results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -123,6 +157,12 @@ function Places() {
         }
     }
 
+    /**
+     * Create a search request
+     * @param search The search query
+     * @param location The location to search around
+     * @returns {{location: *, radius: number, name: *}}
+     */
     function createRequest(search,location) {
         var request = {
             location:location,
