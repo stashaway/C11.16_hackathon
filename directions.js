@@ -2,14 +2,15 @@
  * Created by baultik on 12/12/16.
  */
 function Directions() {
-    var directionService = null;
-    var directionDisplay = null;
+    var mDirectionService = null;
+    var mDirectionDisplay = null;
     var mMap = null;
+    var mPanel = $("#directionsPanel")[0];
 
     this.init = function(map) {
-        directionService = new google.maps.DirectionsService();
-        directionDisplay = new google.maps.DirectionsRenderer({
-            panel:$("#directionsPanel")[0],
+
+        mDirectionService = new google.maps.DirectionsService();
+        mDirectionDisplay = new google.maps.DirectionsRenderer({
             markerOptions:{
                 visible:false
             }
@@ -24,16 +25,21 @@ function Directions() {
             travelMode: 'DRIVING'
         };
 
-        directionDisplay.setMap(mMap);
+        mDirectionDisplay.setMap(mMap);
+        mDirectionDisplay.setPanel(mPanel);
 
-        directionService.route(request, function(result, status) {
+        mDirectionService.route(request, function(result, status) {
             if (status == 'OK') {
-                directionDisplay.setDirections(result);
+                mDirectionDisplay.setDirections(result);
             }
         });
     };
 
-    this.clearMap = function () {
-        directionDisplay.setMap(null);
+    this.clearDirectionsPoly = function () {
+        mDirectionDisplay.setMap(null);
+    };
+
+    this.clearTurnByTurn = function () {
+        mDirectionDisplay.setPanel(null);
     }
 }

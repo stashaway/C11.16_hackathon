@@ -113,13 +113,28 @@ function build_page2_1(direction, button) {
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
     var my_map=new Places();
+    $('#bottom_buttons button').click(function(){
+        console.log(this.id);
+        switch(this.id) {
+            case "switch_directions":
+                my_map.switchDirection();
+                break;
+            case "other_content":
+                build_page3();
+                break;
+            case "choose_again":
+                build_page1();
+                break;
+        }
+    });
+    prepare_map();
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
     my_map.init(map,loc);
     map.setCenter(loc);
-    my_map.search(food_name, loc);
+    my_map.search(food_name, loc, direction);
 }
 
 

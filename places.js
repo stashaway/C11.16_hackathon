@@ -5,6 +5,7 @@ function Places() {
     var mMap = null;
     var mPlacesService = null;
     var mPlaces = [];
+    var mAllPlaces = null;
     var mSearchRadius = 10000;//in meters
     var mSearchQuery = null;
     var mDirection = {
@@ -14,19 +15,51 @@ function Places() {
         west:"west"
     };
     var mLocation = null;
+    var mBearing = null;
+    var mHeading = null;
 
-    this.init = function (map,location) {
+    this.init = function (map) {
         mMap = map;
-        mLocation = location;
         mPlacesService = new google.maps.places.PlacesService(mMap);
     };
 
-    this.search = function (search, location) {
+    this.search = function (search, location,bearing) {
         mSearchQuery = search;
+        mLocation = location;
+        mBearing = bearing;
         var request = createRequest(search,location);
         //console.log("sending request...",request);
         mPlacesService.nearbySearch(request,parseResponse);
     };
+
+    this.switchDirection = function () {
+        var direction = mDirection.north;
+        switch (mHeading) {
+            case mDirection.north:
+                direction = mDirection.south;
+                break;
+            case mDirection.east:
+                direction = mDirection.west;
+                break;
+            case mDirection.west:
+                direction = mDirection.east;
+                break;
+            default:
+                direction = mDirection.north;
+                break;
+        }
+        mHeading = direction;
+        clearMarkers();
+        populateMap(mHeading,mAllPlaces);
+    };
+
+    function populateMap(direction,places) {
+        places = filterByDirection(direction,places);
+        for (var i in places) {
+            var filteredPlace = places[i];
+            createMarker(filteredPlace,mLocation);
+        }
+    }
     
     function filterByDirection(direction,places) {
         var output = [];
@@ -54,6 +87,23 @@ function Places() {
         return output;
     }
 
+    function translateBearing(bearing) {
+        if (bearing < 0) {
+            bearing += 360;
+        }
+
+        if (bearing < 45 || bearing >= 315) {
+            return mDirection.north;
+        } else if (bearing >= 45 && bearing < 135) {
+            return mDirection.east;
+        } else if (bearing >= 135 && bearing < 225) {
+            return mDirection.south;
+        } else if (bearing >= 225 && bearing < 315) {
+            return mDirection.west;
+        }
+        return null;
+    }
+
     function parseResponse(results,status) {
         console.log("Got response",results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -63,13 +113,12 @@ function Places() {
                     mPlaces.push(placeResult);//store all results matching exactly the search query
                 }
             }
+            //keep a copy of all unfiltered matches
+            mAllPlaces = mPlaces.slice();
 
-            //TODO: get filter direction
-            mPlaces = filterByDirection(mDirection.west,mPlaces);
-            for (var i in mPlaces) {
-                var filteredPlace = mPlaces[i];
-                createMarker(filteredPlace,mLocation);
-            }
+            mHeading = translateBearing(mBearing);
+
+            populateMap(mHeading,mPlaces);
         }
     }
 
