@@ -149,7 +149,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         dataType: 'json',
         method: 'POST',
         data: {
-            q: image_array[button].name+" ad USA",
+            q: image_array[button].name+" ad USA 2016",
             maxResults: 1,
             type: 'video'
         },
