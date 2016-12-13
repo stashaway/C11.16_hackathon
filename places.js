@@ -6,7 +6,7 @@ function Places() {
     var mPlacesService = null;
     var mPlaces = [];
     var mAllPlaces = null;
-    var mSearchRadius = 15000;//in meters
+    var mSearchRadius = 10000;//in meters
     var mSearchQuery = null;
     var mDirection = {
         north:"north",
