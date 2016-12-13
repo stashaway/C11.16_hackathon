@@ -175,6 +175,9 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
             var test = result.video[0].title;
             console.log('the title is :' + test);
             //modal area
+            $("#myModal").on('hide.bs.modal', function(){
+                $("iframe").attr('src', '');
+            });
         }
     });
 }
