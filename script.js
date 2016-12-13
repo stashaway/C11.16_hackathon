@@ -112,11 +112,11 @@ function build_page2_1(direction, button) {
     // });
     prepare_map();
     var my_map=new Places();
-    my_map.init(map);
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
+    my_map.init(map,loc);
     map.setCenter(loc);
     my_map.search(food_name, loc);
 }

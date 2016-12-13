@@ -42,7 +42,7 @@ function prepare_map(){
 
 //https://maps.google.com/maps?ll=33.66964,-117.762779&z=17&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=9583901462909674968
 
-function createMarker(placeResult) {
+function createMarker(placeResult,origin) {
     console.log(placeResult);
     directions.init(map);
 
@@ -76,18 +76,21 @@ function createMarker(placeResult) {
 
             info.on("click",function () {
                 var destination = placeResult.geometry.location;
-                var origin = new google.maps.LatLng(33.6361934,-117.7415816);
+                //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
                 directions.clearMap();
                 directions.showDirection(origin,destination);
                 infowindow.close();
             });
 
-            var title = $("<h6>",{
-                text:"Wendys"
+            var title = $("<h5>",{
+                text:placeResult.name
+            });
+            var address = $("<p>",{
+                text:placeResult.vicinity
             });
 
             var infodiv = $("<div>");
-            infodiv.append(title,info);
+            infodiv.append(title,address,info);
 
             infowindow.setContent(infodiv[0]);
             infowindow.open(map,marker);
