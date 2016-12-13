@@ -42,7 +42,7 @@ function prepare_map(){
 }
 
 function createMarker(placeResult) {
-    console.log("marker made");
+    console.log(placeResult);
     var marker = new google.maps.Marker({
         map: map,
         icon:{
