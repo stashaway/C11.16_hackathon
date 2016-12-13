@@ -81,11 +81,14 @@ function build_page2(button) {
     });
 }
 function build_page2_1(direction, button) {
+    var dpanel = $("<div>",{
+        id:"directionsPanel"
+    });
     $('.main_body *').remove();
     $('.textAtBottom').remove();
     var food_name=image_array[button].name;
     var map_container = $('<div id="map">');
-    $('.main_body').append(map_container);
+    $('.main_body').append(map_container,dpanel);
     var bottom_choices=$('<div id="bottom_buttons">');
     var button1=$('<button id="switch_directions">').text('Switch Direction');
     var button2=$('<button id="other_content">').text('Other Content');
