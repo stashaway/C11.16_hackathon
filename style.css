@@ -7,7 +7,7 @@ html{
 }
 header img {
     position: relative;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 80%;
@@ -68,4 +68,9 @@ header {
     margin: 5px 0;
     position: relative;
     left: 10%;
+}
+.advertising_video {
+    width: 100%;
+    position: relative;
+    margin-top: 50px;
 }
