@@ -128,7 +128,7 @@ function setCurrentLocation(location) {
 }
 
 function showNoPlaces(name) {
-    var infodiv = createMarkerInfo("No " + name + " found near you");
+    var infodiv = createMarkerInfo("No " + name + " found this way.","Try switching direction.");
     infowindow.setContent(infodiv[0]);
     infowindow.open(map,currentLocationMarker);
 }
