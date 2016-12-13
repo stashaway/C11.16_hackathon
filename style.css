@@ -74,3 +74,20 @@ header {
     position: relative;
     margin-top: 50px;
 }
+.blocker{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 1000;
+    font-family: 'Roboto', sans-serif;
+    display: none;
+    background-color: white;
+    text-align: center;
+}
+@media screen and (min-width: 500px) {
+    .blocker{
+        display:inherit;
+    }
+}
