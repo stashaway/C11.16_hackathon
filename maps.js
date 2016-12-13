@@ -32,7 +32,7 @@ for (i = 0; i < locations.length; i++) {
 
 function prepare_map(){
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
+        zoom: 11,
         center: new google.maps.LatLng(-33.92, 151.25),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
@@ -42,11 +42,17 @@ function prepare_map(){
 }
 
 function createMarker(placeResult) {
-    console.log(placeResult);
+    var this_img;
+    for (var loop=0; loop < image_array.length; loop++ ){
+         if (placeResult.name === image_array[loop].name) {
+             this_img = image_array[loop].image;
+             break;
+         }
+    }
     var marker = new google.maps.Marker({
         map: map,
         icon:{
-            url:"images/tacobell.png",
+            url:"images/" + this_img,
             scaledSize : new google.maps.Size(30,30,"px","px")
         },
         place: {
