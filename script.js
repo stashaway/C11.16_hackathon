@@ -3,30 +3,36 @@
  */
 $(document).ready(function(){
     build_page1();
-    $('.logos_container div').click(function(){
+    $('.logos_container div.col-xs-4').click(function(){
         build_page2($(this).attr('data-imgindex'));
-    })
+    });
+    navigator.geolocation.getCurrentPosition(function(position) {
+        starting_location=position.coords;
+    });
 });
+var starting_location;
+var second_location;
+var direction;
 
 var image_array = [
     {image: 'burgerking.png',
-        name: 'Burger King'},
+     name: 'Burger King'},
     {image: 'carls.jpg',
-        name: "Carl's Jr."},
+     name: "Carl's Jr."},
     {image: 'deltaco.png',
-        name: "Del Taco"},
+     name: "Del Taco"},
     {image: 'innout.png',
-        name: "In-N-Out Burger"},
+     name: "In-N-Out Burger"},
     {image: 'jackinthebox.png',
-        name: "Jack In The Box"},
+     name: "Jack In The Box"},
     {image: 'kfc.png',
-        name: "KFC"},
+     name: "KFC"},
     {image: 'mcdonalds.png',
-        name: "McDonald's"},
+     name: "McDonald's"},
     {image: 'tacobell.png',
-        name: "Taco Bell"},
+     name: "Taco Bell"},
     {image: 'wendys.png',
-        name: "Wendy's"}
+     name: "Wendy's"}
     ];
 
 function build_page1 () {
@@ -68,14 +74,19 @@ function build_page1 () {
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
 }
 
-function build_page2(button){
+function build_page2(button) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        direction = set_direction(position);
+        build_page2_1(direction, button);
+    });
+}
+function build_page2_1(direction, button) {
     var dpanel = $("<div>",{
         id:"directionsPanel"
     });
     $('.main_body *').remove();
     $('.textAtBottom').remove();
     var food_name=image_array[button].name;
-    // console.log(food_name);
     var map_container = $('<div id="map">');
     $('.main_body').append(map_container,dpanel);
     var bottom_choices=$('<div id="bottom_buttons">');
@@ -84,12 +95,37 @@ function build_page2(button){
     var button3=$('<button id="choose_again">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
+    // $('#bottom_buttons button').click(function);
     prepare_map();
     var my_map=new Places();
     my_map.init(map);
-    var loc = new google.maps.LatLng(33.6361934,-117.7415816);
+    var loc = {
+        lat: second_location.latitude,
+        lng: second_location.longitude
+    };
     map.setCenter(loc);
     my_map.search(food_name, loc);
 }
 
+function set_direction(position) {
+    second_location = position.coords;
+    // var starting_long=starting_location.longitude;
+    // var starting_lat=starting_location.latitude;
+    // var next_long=second_location.longitude;
+    // var next_lat=starting_location.latitude;
+    var starting_long=33.630731;
+    var starting_lat=-117.743381;
+    var next_long=33.633238;
+    var next_lat=-117.747019;
+    var long_diff=starting_long-next_long;
+    var lat_diff=starting_lat-next_lat;
+    console.log("Differences "+long_diff,lat_diff);
+    var bearing = Math.tan(long_diff / lat_diff);
+    console.log('bearing is '+ bearing);
+    if (isNaN(bearing)) {
+        return 0;
+    }
+    return bearing;
+
+}
 
