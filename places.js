@@ -129,7 +129,7 @@ function Places() {
     /**
      * Translates a bearing in degrees to a general direction
      * @param bearing The bearing with east being 0deg and west being 180deg
-     * @returns {*} A general direction
+     * @returns {String|null} A general direction
      */
     function translateBearing(bearing) {
         if (bearing < 0) {

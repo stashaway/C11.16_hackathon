@@ -7,7 +7,7 @@ var directions = null;
 var markers = [];
 var currentLocationMarker = null;
 /**
- * Create and initialize map objects
+ * Create and initialize maps objects
  */
 function prepareMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -34,7 +34,7 @@ function clearMarkers() {
 /**
  * Create elements used in the {@link InfoWindow}
  * @param title The title string
- * @param details The detail or subtitle string
+ * @param details The detail/subtitle string
  * @returns {*|jQuery|HTMLElement}
  */
 function createMarkerInfo(title, details) {
@@ -91,20 +91,20 @@ function createMarker(placeResult, origin) {
         return function () {
             var infoDiv = createMarkerInfo(placeResult.name, placeResult.vicinity);
 
-            var info = $("<button>", {
+            var infoButton = $("<button>", {
                 class: "btn btn-default",
                 type: "button",
                 text: "Directions"
             });
 
-            info.on("click", function () {
+            infoButton.on("click", function () {
                 var destination = placeResult.geometry.location;
                 directions.clearRoute();
                 directions.showDirection(origin, destination);
                 infoWindow.close();
             });
 
-            infoDiv.append(info);
+            infoDiv.append(infoButton);
             infoWindow.setContent(infoDiv[0]);
             infoWindow.open(map, marker);
         }
