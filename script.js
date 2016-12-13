@@ -106,26 +106,12 @@ function build_page2_1(direction, button) {
     $('.main_body').append(map_container,dpanel);
     var bottom_choices = $('<div id="bottom_buttons">');
     var button1 = $('<button id = "switch_directions" class = "btn btn-primary btn-lg">').text('Switch Direction');
-    var button2 = $('<button id = "other_content" class = "btn btn-info btn-sm">').text('View YouTube').attr('data-button',button); //data-button is used here to correctly choose the YouTube video later
+    var button2 = $('<button id = "other_content" class = "btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">').text('View YouTube').attr('data-button',button); //data-button is used here to correctly choose the YouTube video later
     var button3 = $('<button id = "choose_again" class = "btn btn-warning btn-sm">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
     var my_map = new Places();
-    $('#bottom_buttons button').click(function(){
-        console.log(this.id);
-        switch(this.id) {
-            case "switch_directions":
-                my_map.switchDirection();
-                break;
-            case "other_content":
-                build_page3();
-                break;
-            case "choose_again":
-                build_page1();
-                break;
-        }
-    });
     prepare_map();
     var loc = {
         lat: second_location.latitude,
@@ -136,8 +122,6 @@ function build_page2_1(direction, button) {
     map.setCenter(loc);
     my_map.search(food_name, loc, direction);
 }
-
-
 function set_direction(position) {
     second_location = position.coords;
     var starting_long = starting_location.longitude;
@@ -164,31 +148,36 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
             q: image_array[button].name+" ad USA",
             maxResults: 1,
             type: 'video'
-
         },
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result){
-            var new_div_page3 = $('<div>',{
-                "class" : "container_page3"
-            });
             var iframe = $('<iframe>', {
                "class" : "advertising_video",
                 "src" : "https://www.youtube.com/embed/" + result.video[0].id
         });
-            var button = $('<button class="btn btn-primary btn-lg">').text('Go back to results');
-            button.click(function(){
-                return_to_page2();
+            var modal_h4 = $('<h3>',{
+                "class" : "modal-title",
+                "text":result.video[0].title
             });
-            $('#directionsPanel').toggle();
-            new_div_page3.append(iframe, button);
-            $('.main_body').append(new_div_page3);
+            // var button = $('<button class="btn btn-primary btn-lg">').text('Go back to results');
+            // button.click(function(){
+            //     return_to_page2();
+            // });
             console.log('AJAX Success function called, with the following result:', result);
+            //modal area
+            $('.modal-body *').remove();
+            $('.modal-body').append(iframe);
+            $('.modal-header h3').remove();
+            $('.modal-header').append(modal_h4);
+            var test = result.video[0].title;
+            console.log('the title is :' + test);
+            //modal area
         }
     });
 }
-function return_to_page2(){
-    console.log('back button called');
-    $('.container_page3').remove();
-    $('#directionsPanel').toggle();
-}
+// function return_to_page2(){
+//     console.log('back button called');
+//     $('.container_page3').remove();
+//     $('#directionsPanel').toggle();
+// }
 
