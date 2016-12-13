@@ -18,8 +18,20 @@ function Places() {
         east: "east",
         west: "west"
     };
+    /**
+     * The current location when a search is initiated. Passed as a LatLngLiteral
+     * @type {Object}
+     */
     var mLocation = null;
+    /**
+     * The direction headed in degrees
+     * @type {Number}
+     */
     var mBearing = null;
+    /**
+     * The general direction determined by {@link mBearing}
+     * @type {String}
+     */
     var mHeading = null;
     /**
      * Initialize Places service
