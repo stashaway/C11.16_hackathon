@@ -5,28 +5,33 @@ $(document).ready(function(){
     build_page1();
     $('.logos_container div').click(function(){
         build_page2($(this).attr('data-imgindex'));
-    })
+    });
+    navigator.geolocation.getCurrentPosition(function(position) {
+        starting_location=position.coords;
+    });
 });
+var starting_location;
+var second_location;
 
 var image_array = [
     {image: 'burgerking.png',
-        name: 'Burger King'},
+     name: 'Burger King'},
     {image: 'carls.jpg',
-        name: "Carl's Jr."},
+     name: "Carl's Jr."},
     {image: 'deltaco.png',
-        name: "Del Taco"},
+     name: "Del Taco"},
     {image: 'innout.png',
-        name: "In-N-Out Burger"},
+     name: "In-N-Out Burger"},
     {image: 'jackinthebox.png',
-        name: "Jack In The Box"},
+     name: "Jack In The Box"},
     {image: 'kfc.png',
-        name: "KFC"},
+     name: "KFC"},
     {image: 'mcdonalds.png',
-        name: "McDonald's"},
+     name: "McDonald's"},
     {image: 'tacobell.png',
-        name: "Taco Bell"},
+     name: "Taco Bell"},
     {image: 'wendys.png',
-        name: "Wendy's"}
+     name: "Wendy's"}
     ];
 
 function build_page1 () {
@@ -71,8 +76,10 @@ function build_page1 () {
 function build_page2(button){
     $('.main_body *').remove();
     $('.textAtBottom').remove();
+    navigator.geolocation.getCurrentPosition(function(position) {
+        set_direction(position);
+    });
     var food_name=image_array[button].name;
-    // console.log(food_name);
     var map_container = $('<div id="map">');
     $('.main_body').append(map_container);
     var bottom_choices=$('<div id="bottom_buttons">');
@@ -88,5 +95,15 @@ function build_page2(button){
     map.setCenter(loc);
     my_map.search(food_name, loc);
 }
-
+function set_direction(position) {
+    second_location = position.coords;
+    var starting_long=starting_location.longitude;
+    var starting_lat=starting_location.latitude;
+    var next_long=second_location.longitude;
+    var next_lat=starting_location.latitude;
+    var long_diff=starting_long-next_long;
+    var lat_diff=starting_lat-next_lat;
+    console.log("DIfferences "+long_diff,lat_diff);
+    $('#switch_directions').text(long_diff + '   ' + lat_diff);
+}
 

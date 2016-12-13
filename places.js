@@ -5,7 +5,7 @@ function Places() {
     var mMap = null;
     var mPlacesService = null;
     var mPlaces = [];
-    var mSearchRadius = 5000;//in meters
+    var mSearchRadius = 15000;//in meters
     var mSearchQuery = null;
 
     var response = sampleResponse;
