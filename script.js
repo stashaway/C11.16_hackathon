@@ -83,8 +83,8 @@ function build_page1 () {
         "class": "textAtBottom"
     });
     var only_h1 = $('<h1>').text('Choose some food!');
-    var first_h3 = $('<h3>').text('We will show you locations');
-    var second_h3 = $('<h3>').text('in front of you');
+    var first_h3 = $('<h3>').text("We'll show you locations");
+    var second_h3 = $('<h3>').text('on your way!');
 
     $('.main_body').append(bottom_text);
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
