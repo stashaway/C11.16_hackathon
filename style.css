@@ -7,10 +7,10 @@ html{
 }
 header img {
     position: relative;
-    top: 55%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 55%;
+    width: 80%;
 }
 header {
     position: relative;
@@ -21,13 +21,19 @@ header {
 .textAtBottom h1 {
     font-size: 2em;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
-    margin-top:50px;
+    font-family: 'Pacifico', cursive;
+    margin-top: 50px;
+    color: darkred;
+    margin-bottom: 20px;
 }
 .textAtBottom h3 {
     font-size: 1.5em;
     text-align: center;
     font-family: 'Roboto', sans-serif;
+    /*font-family: 'Pacifico', cursive;*/
+    line-height: .7em;
+    margin-top: 0;
+    /*margin-bottom: 0;*/
 }
 .textAtBottom {
     /*background-color: #F7B32B;*/
@@ -36,8 +42,9 @@ header {
 .logos_container{
     position:relative;
     height:100%;
-    margin-top: 50px;
-
+    margin-top: 20px;
+    top: 0;
+    left: 0;
 }
 .main_body {
     position:relative;
@@ -49,11 +56,6 @@ header {
     margin: 10px;
     width: 70px;
     height: 70px;
-}
-.logos_container {
-    position: relative;
-    top: 0;
-    left: 0;
 }
 #map{
     width: 100%;

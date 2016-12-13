@@ -10,7 +10,7 @@ $(document).ready(function(){
         console.log(this);
         switch(this.id) {
             case "switch_directions":
-                switch_directions();
+                my_places.switchDirection();
                 break;
             case "other_content":
                 view_youtube_ads($(this).attr('data-button'));
@@ -29,6 +29,7 @@ $(document).ready(function(){
 var starting_location;
 var second_location;
 var direction;
+var my_places = null;
 var image_array = [
     {image: 'burgerking.jpg',
      name: 'Burger King'},
@@ -83,8 +84,8 @@ function build_page1 () {
         "class": "textAtBottom"
     });
     var only_h1 = $('<h1>').text('Choose some food!');
-    var first_h3 = $('<h3>').text('We will show you locations');
-    var second_h3 = $('<h3>').text('in front of you');
+    var first_h3 = $('<h3>').text("We'll show you locations");
+    var second_h3 = $('<h3>').text('on your way!');
 
     $('.main_body').append(bottom_text);
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
@@ -111,16 +112,16 @@ function build_page2_1(direction, button) {
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
-    var my_map = new Places();
+    my_places = new Places();
     prepare_map();
     var loc = {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
     setCurrentLocation(loc);
-    my_map.init(map,loc);
+    my_places.init(map,loc);
     map.setCenter(loc);
-    my_map.search(food_name, loc, direction);
+    my_places.search(food_name, loc, direction);
 }
 function set_direction(position) {
     second_location = position.coords;
@@ -159,10 +160,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
                 "class" : "modal-title",
                 "text":result.video[0].title
             });
-            // var button = $('<button class="btn btn-primary btn-lg">').text('Go back to results');
-            // button.click(function(){
-            //     return_to_page2();
-            // });
+
             console.log('AJAX Success function called, with the following result:', result);
             //modal area
             $('.modal-body *').remove();
@@ -175,9 +173,5 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         }
     });
 }
-// function return_to_page2(){
-//     console.log('back button called');
-//     $('.container_page3').remove();
-//     $('#directionsPanel').toggle();
-// }
+
 
