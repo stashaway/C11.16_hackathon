@@ -49,11 +49,11 @@ function Places() {
                 break;
         }
         mHeading = direction;
+        clearMarkers();
         populateMap(mHeading,mAllPlaces);
     };
 
     function populateMap(direction,places) {
-        clearMarkers();
         places = filterByDirection(direction,places);
         for (var i in places) {
             var filteredPlace = places[i];

@@ -38,6 +38,7 @@ function prepare_map(){
     });
     infowindow = new google.maps.InfoWindow();
     directions = new Directions();
+    directions.init(map);
     //makemap();
 }
 
@@ -47,11 +48,12 @@ function clearMarkers() {
         marker.setMap(null);
     }
     markers = [];
+    directions.clearTurnByTurn();
+    directions.clearDirectionsPoly();
 }
 
 function createMarker(placeResult,origin) {
     console.log(placeResult);
-    directions.init(map);
 
     var this_img;
     for (var loop=0; loop < image_array.length; loop++ ){
@@ -86,7 +88,7 @@ function createMarker(placeResult,origin) {
             info.on("click",function () {
                 var destination = placeResult.geometry.location;
                 //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
-                directions.clearMap();
+                directions.clearDirectionsPoly();
                 directions.showDirection(origin,destination);
                 infowindow.close();
             });
