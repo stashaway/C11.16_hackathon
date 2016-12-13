@@ -125,14 +125,10 @@ function build_page2_1(direction, button) {
 
 function set_direction(position) {
     second_location = position.coords;
-    // var starting_long=starting_location.longitude;
-    // var starting_lat=starting_location.latitude;
-    // var next_long=second_location.longitude;
-    // var next_lat=starting_location.latitude;
-    var starting_long=33.630731;
-    var starting_lat=-117.743381;
-    var next_long=33.633238;
-    var next_lat=-117.747019;
+    var starting_long=starting_location.longitude;
+    var starting_lat=starting_location.latitude;
+    var next_long=second_location.longitude;
+    var next_lat=starting_location.latitude;
     var long_diff=starting_long-next_long;
     var lat_diff=starting_lat-next_lat;
     console.log("Differences "+long_diff,lat_diff);
@@ -142,7 +138,6 @@ function set_direction(position) {
         return 0;
     }
     return bearing;
-
 }
 
 function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
