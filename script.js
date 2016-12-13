@@ -76,9 +76,9 @@ function build_page2(button){
     var map_container = $('<div id="map">');
     $('.main_body').append(map_container);
     var bottom_choices=$('<div id="bottom_buttons">');
-    var button1=$('<button id="switch_directions">');
-    var button2=$('<button id="other_content">');
-    var button3=$('<button id="choose_again">');
+    var button1=$('<button id="switch_directions">').text('Switch Direction');
+    var button2=$('<button id="other_content">').text('Other Content');
+    var button3=$('<button id="choose_again">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
