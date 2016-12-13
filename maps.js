@@ -6,6 +6,7 @@ var map;
 var directions;
 var marker, i;
 var markers = [];
+var currentLocationMarker = null;
 function makemap() {
 for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
@@ -96,5 +97,16 @@ function createMarker(placeResult,origin) {
             infowindow.setContent(infodiv[0]);
             infowindow.open(map,marker);
         }
-    })(marker, placeResult));
+    })(marker,placeResult));
+}
+
+function setCurrentLocation(location) {
+    currentLocationMarker = new google.maps.Marker({
+        map: map,
+        icon:{
+            url:"images/youarehere.png",
+            scaledSize : new google.maps.Size(30,30,"px","px")
+        },
+        position: new google.maps.LatLng(location.lat,location.lng)
+    });
 }
