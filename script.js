@@ -175,7 +175,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
                "class" : "advertising_video",
                 "src" : "https://www.youtube.com/embed/" + result.video[0].id
         });
-            var button = $('<button>').text('Go back to results');
+            var button = $('<button class="btn btn-primary btn-lg">').text('Go back to results');
             button.click(function(){
                 return_to_page2();
             });
