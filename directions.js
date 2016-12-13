@@ -11,10 +11,7 @@ function Directions() {
 
         mDirectionService = new google.maps.DirectionsService();
         mDirectionDisplay = new google.maps.DirectionsRenderer({
-            // suppressMarkers: true
-            markerOptions:{
-                // visible:false
-            }
+            suppressMarkers: true
         });
         mMap = map;
     };
