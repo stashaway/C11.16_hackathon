@@ -43,8 +43,47 @@ function clearMarkers() {
     directions.clearDirectionsPoly();
 }
 
+function createMarkerInfo(title,details,button) {
+    var infoDiv = $("<div>");
+
+    if (title) {
+        var head = $("<h5>",{
+            text:title
+        });
+        infoDiv.append(head);
+    }
+
+    if (details) {
+        var address = $("<p>",{
+            text:details
+        });
+        infoDiv.append(address);
+    }
+
+    if (button) {
+        var info = $("<button>",{
+            class:"btn btn-default",
+            type:"button",
+            text:button
+        });
+
+        info.on("click",function () {
+            var destination = placeResult.geometry.location;
+            //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
+            directions.clearDirectionsPoly();
+            directions.showDirection(origin,destination);
+            infowindow.close();
+        });
+
+        infoDiv.append(info);
+    }
+
+    return infoDiv;
+}
+
 function createMarker(placeResult,origin) {
     console.log(placeResult);
+    infowindow.close();
 
     var this_img;
     for (var loop=0; loop < image_array.length; loop++ ){
@@ -70,29 +109,7 @@ function createMarker(placeResult,origin) {
 
     google.maps.event.addListener(marker,"click", (function (marker,placeResult) {
         return function () {
-            var info = $("<button>",{
-                class:"btn btn-default",
-                type:"button",
-                text:"Directions"
-            });
-
-            info.on("click",function () {
-                var destination = placeResult.geometry.location;
-                //var origin = new google.maps.LatLng(33.6361934,-117.7415816);
-                directions.clearDirectionsPoly();
-                directions.showDirection(origin,destination);
-                infowindow.close();
-            });
-
-            var title = $("<h5>",{
-                text:placeResult.name
-            });
-            var address = $("<p>",{
-                text:placeResult.vicinity
-            });
-
-            var infodiv = $("<div>");
-            infodiv.append(title,address,info);
+            var infodiv = createMarkerInfo(placeResult.name,placeResult.vicinity,"Directions");
 
             infowindow.setContent(infodiv[0]);
             infowindow.open(map,marker);
@@ -109,4 +126,10 @@ function setCurrentLocation(location) {
         },
         position: new google.maps.LatLng(location.lat,location.lng)
     });
+}
+
+function showNoPlaces(name) {
+    var infodiv = createMarkerInfo("No " + name + " found near you");
+    infowindow.setContent(infodiv[0]);
+    infowindow.open(map,currentLocationMarker);
 }
