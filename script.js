@@ -3,10 +3,10 @@
  */
 $(document).ready(function(){
     build_page1();
-    $('.main_body').on('click','.logos_container div.col-xs-4',function(){
+    $('.main_body').on('click', '.logos_container div.col-xs-4', function(){
         build_page2($(this).attr('data-imgindex'));
     });
-    $('.main_body').on('click','#bottom_buttons button',function(){
+    $('.main_body').on('click', '#bottom_buttons button', function(){
         console.log(this);
         switch(this.id) {
             case "switch_directions":
@@ -25,10 +25,10 @@ $(document).ready(function(){
     });
     $('header').click(build_page1);
 });
+
 var starting_location;
 var second_location;
 var direction;
-
 var image_array = [
     {image: 'burgerking.jpg',
      name: 'Burger King'},
@@ -91,7 +91,7 @@ function build_page1 () {
 }
 
 function build_page2(button) {
-    navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(function(position) {
         direction = set_direction(position);
         build_page2_1(direction, button);
     });
@@ -101,18 +101,17 @@ function build_page2_1(direction, button) {
         id:"directionsPanel"
     });
     $('.main_body *').remove();
-    // $('.textAtBottom').remove();
-    var food_name=image_array[button].name;
-    var map_container = $('<div id="map">');
+    var food_name = image_array[button].name;
+    var map_container = $('<div id = "map">');
     $('.main_body').append(map_container,dpanel);
-    var bottom_choices=$('<div id="bottom_buttons">');
-    var button1=$('<button id="switch_directions" class="btn btn-primary btn-lg">').text('Switch Direction');
-    var button2=$('<button id="other_content" class="btn btn-info btn-sm">').text('View YouTube').attr('data-button',button);
-    var button3=$('<button id="choose_again" class="btn btn-warning btn-sm">').text('Choose Again');
+    var bottom_choices = $('<div id="bottom_buttons">');
+    var button1 = $('<button id = "switch_directions" class = "btn btn-primary btn-lg">').text('Switch Direction');
+    var button2 = $('<button id = "other_content" class = "btn btn-info btn-sm">').text('View YouTube').attr('data-button',button); //data-button is used here to correctly choose the YouTube video later
+    var button3 = $('<button id = "choose_again" class = "btn btn-warning btn-sm">').text('Choose Again');
     $('.main_body').append(bottom_choices);
     $('#bottom_buttons').append(button1, button2, button3);
     prepare_map();
-    var my_map=new Places();
+    var my_map = new Places();
     $('#bottom_buttons button').click(function(){
         console.log(this.id);
         switch(this.id) {
@@ -132,7 +131,7 @@ function build_page2_1(direction, button) {
         lat: second_location.latitude,
         lng: second_location.longitude
     };
-    my_map.init(map,loc);
+    my_map.init(map, loc);
     map.setCenter(loc);
     my_map.search(food_name, loc, direction);
 }
@@ -140,58 +139,47 @@ function build_page2_1(direction, button) {
 
 function set_direction(position) {
     second_location = position.coords;
-    var starting_long=starting_location.longitude;
-    var starting_lat=starting_location.latitude;
-    var next_long=second_location.longitude;
-    var next_lat=starting_location.latitude;
-    // var starting_long=33.630731;
-    // var starting_lat=-117.743381;
-    // var next_long=33.633238;
-    // var next_lat=-117.747019;
-    var long_diff=starting_long-next_long;
-    var lat_diff=starting_lat-next_lat;
-    console.log("Differences "+long_diff,lat_diff);
+    var starting_long = starting_location.longitude;
+    var starting_lat = starting_location.latitude;
+    var next_long = second_location.longitude;
+    var next_lat = starting_location.latitude;
+    var long_diff = starting_long-next_long;
+    var lat_diff = starting_lat-next_lat;
+    console.log("Differences " + long_diff, lat_diff);
     var bearing = Math.tan(long_diff / lat_diff);
     console.log('bearing is '+ bearing);
     if (isNaN(bearing)) {
         return 0;
     }
     return bearing;
-
 }
 
 function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
     console.log('hello');
-    // $('.main_body *').toggle();
-    // $('.textAtBottom').hide();
-    $.ajax({ // ajax
+    $.ajax({
         dataType: 'json',
         method: 'POST',
         data: {
-            q:image_array[button].name+" ad USA",
-            maxResults:1,
+            q: image_array[button].name+" ad USA",
+            maxResults: 1,
             type: 'video'
 
         },
         url: 'https://s-apis.learningfuze.com/hackathon/youtube/search.php',
         success: function (result){
-            var new_div_page3 =$('<div>',{
-                "class":"container_page3"
+            var new_div_page3 = $('<div>',{
+                "class" : "container_page3"
             });
             var iframe = $('<iframe>', {
-               "class":"advertising_video",
-                "src":"https://www.youtube.com/embed/" + result.video[0].id
+               "class" : "advertising_video",
+                "src" : "https://www.youtube.com/embed/" + result.video[0].id
         });
-            var button =$('<button>').text('Go back to results');
+            var button = $('<button>').text('Go back to results');
             button.click(function(){
                 return_to_page2();
             });
             new_div_page3.append(iframe, button);
             $('.main_body').append(new_div_page3);
-            // $('.main_body').append(iframe);
-            // $('.main_body').append(button);
-            // <iframe width="560" height="315" src="https://www.youtube.com/embed/_UUmpogN-RM" frameborder="0" allowfullscreen></iframe>
-
             console.log('AJAX Success function called, with the following result:', result);
         }
     });
@@ -199,6 +187,5 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
 function return_to_page2(){
     console.log('back button called');
     $('.container_page3').remove();
-    // $('.main_body *').toggle();
 }
 
