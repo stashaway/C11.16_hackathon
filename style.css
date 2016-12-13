@@ -36,8 +36,9 @@ header {
 .logos_container{
     position:relative;
     height:100%;
-    margin-top: 50px;
-
+    margin-top: 20px;
+    top: 0;
+    left: 0;
 }
 .main_body {
     position:relative;
@@ -49,11 +50,6 @@ header {
     margin: 10px;
     width: 70px;
     height: 70px;
-}
-.logos_container {
-    position: relative;
-    top: 0;
-    left: 0;
 }
 #map{
     width: 100%;
