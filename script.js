@@ -147,7 +147,7 @@ function set_direction(position) {
 
 function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
     console.log('hello');
-    $('.main_body *').toggle();
+    // $('.main_body *').toggle();
     // $('.textAtBottom').hide();
     $.ajax({ // ajax
         dataType: 'json',
@@ -164,12 +164,12 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
                 "class":"container_page3"
             });
             var iframe = $('<iframe>', {
-               "class":"advertising_video",//todo:fix some of the logos not working when click for videos.
+               "class":"advertising_video",
                 "src":"https://www.youtube.com/embed/" + result.video[0].id
         });
-            var button =$('<button>').text('Go back');
+            var button =$('<button>').text('Go back to results');
             button.click(function(){
-                go_back();
+                return_to_page2();
             });
             new_div_page3.append(iframe, button);
             $('.main_body').append(new_div_page3);
@@ -181,9 +181,9 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         }
     });
 }
-function go_back(){
+function return_to_page2(){
     console.log('back button called');
     $('.container_page3').remove();
-    $('.main_body *').toggle();
+    // $('.main_body *').toggle();
 }
 
