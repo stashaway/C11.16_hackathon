@@ -148,6 +148,9 @@ header {
         height: 80vh;
         position:relative;
     }
+    div.logos_container {
+        margin-left: 70px;
+    }
 }
 @media screen and (min-width: 500px) and (orientation: portrait) {
     .blocker{
@@ -174,4 +177,7 @@ header {
     text-shadow: 0 1px 0 #fff;
     filter: alpha(opacity=20);
     opacity: .5;
+}
+#map .btn-default {
+    margin-bottom: 7px;
 }
