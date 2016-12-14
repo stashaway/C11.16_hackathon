@@ -27,7 +27,7 @@ $(document).ready(function(){
     navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
     });
-
+    $('header').click(build_page1);
 });
 
 var starting_location;
@@ -62,17 +62,18 @@ function build_page1 () {
     var div_container = $('<div>', {
         "class": "logos_container"
     });
+
     var main_body = $('.main_body');
     main_body.append(div_container); //append container div into Main body
 
     var count = 0;
     for (var i = 0; i < 3; i++) {
-        var div_row = $('<div>', { //created container div
+        var div_row = $('<div>', {                  // created container div
             "class": "row"
         });
-        $(div_container).append(div_row); //append div row into div container
+        $(div_container).append(div_row);           // append div row into div container
         for (var j = 0; j < 3; j++) {
-            var div_columns = $('<div>', {// created 3 div with class of "row"
+            var div_columns = $('<div>', {          // created 3 div with class of "row"
                 "class": "col-xs-4",
                 "data-imgindex": count++
             });
@@ -85,6 +86,7 @@ function build_page1 () {
             "src": "images/" + image_array[x].image,
             "class": "img-circle"
         });
+
         $('[data-imgindex=' + x + ']').append(img);//append each image into row html
     }
 
@@ -176,7 +178,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         dataType: 'json',
         method: 'POST',
         data: {
-            q: image_array[button].name+" ad USA",
+            q: image_array[button].name+" ad USA 2016",
             maxResults: 1,
             type: 'video'
         },
