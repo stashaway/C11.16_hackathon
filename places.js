@@ -91,7 +91,56 @@ function Places() {
 
         if (places.length == 0) {
             showNoPlaces(mSearchQuery);
+        } else {
+            setClosest(places);
         }
+    }
+
+    /**
+     * Finds the closest place to current location and sets the map bounds to include both
+     * @param places The places to search through
+     */
+    function setClosest(places) {
+        var closestIndex = 0;
+        var closest;
+        for (var i in places) {
+            var place = places[i].geometry.location;
+
+            var lat = Math.pow(place.lat() - mLocation.lat ,2);
+            var lng = Math.pow(place.lng() - mLocation.lng ,2);
+            var distance = Math.sqrt(lat + lng);
+
+            if (!closest || closest > distance) {
+                closestIndex = i;
+                closest = distance;
+            }
+        }
+
+        var destination = places[closestIndex].geometry.location;
+        var east, north, south, west = 0;
+
+        if (mLocation.lat > destination.lat()) {
+            north = mLocation.lat;
+            south = destination.lat();
+        } else {
+            south = mLocation.lat;
+            north = destination.lat();
+        }
+
+        if (mLocation.lng > destination.lng()) {
+            east = mLocation.lng;
+            west = destination.lng();
+        } else {
+            west = mLocation.lng;
+            east = destination.lng();
+        }
+
+        map.fitBounds({
+            north:north,
+            south:south,
+            east:east,
+            west:west
+        });
     }
     /**
      * Filters places by a general direction
@@ -151,7 +200,7 @@ function Places() {
      * @param status The status of the search
      */
     function parseResponse(results, status) {
-        console.log("Got response", results);
+        //console.log("Got response", results);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i in results) {
                 var placeResult = results[i];//PlaceResult objects
