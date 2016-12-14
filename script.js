@@ -23,7 +23,7 @@ $(document).ready(function(){
     navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
     });
-
+    $('header').click(build_page1);
 });
 
 var starting_location;
@@ -56,37 +56,39 @@ function build_page1 () {
     var div_container = $('<div>', {
         "class": "logos_container"
     });
-    $('.main_body').append(div_container); //append container div into Main body
+
+    $('.main_body').append(div_container);          // append container div into Main body
     var count = 0;
     for (var i = 0; i < 3; i++) {
-        var div_row = $('<div>', { //created container div
+        var div_row = $('<div>', {                  // created container div
             "class": "row"
         });
-        $(div_container).append(div_row); //append div row into div container
+        $(div_container).append(div_row);           // append div row into div container
         for (var j = 0; j < 3; j++) {
-            var div_columns = $('<div>', {// created 3 div with class of "row"
+            var div_columns = $('<div>', {          // created 3 div with class of "row"
                 "class": "col-xs-4",
                 "data-imgindex": count++
             });
             $(div_row).append(div_columns);
         }
     }
+
     for (var x = 0; x < image_array.length; x++) {
 
         var img = $("<img>", {
             "src": "images/" + image_array[x].image,
             "class": "img-circle"
         });
-        $('[data-imgindex=' + x + ']').append(img);//append each image into row html
+        $('[data-imgindex=' + x + ']').append(img); // append each image into row html
 
     }
+
     var bottom_text = $('<div>', {
         "class": "textAtBottom"
     });
     var only_h1 = $('<h1>').text('Choose some food!');
     var first_h3 = $('<h3>').text("We'll show you locations");
     var second_h3 = $('<h3>').text('on your way!');
-
     $('.main_body').append(bottom_text);
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
 }
@@ -145,13 +147,13 @@ function set_direction(position) {
     return bearing;
 }
 
-function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
+function view_youtube_ads(button) {   //whenever the "other content" button clicked whole page 2 hide and display page3
     console.log('hello');
     $.ajax({
         dataType: 'json',
         method: 'POST',
         data: {
-            q: image_array[button].name+" ad USA",
+            q: image_array[button].name+" ad USA 2016",
             maxResults: 1,
             type: 'video'
         },
