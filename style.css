@@ -173,5 +173,5 @@ header {
     color: #fff;
     text-shadow: 0 1px 0 #fff;
     filter: alpha(opacity=20);
-    opacity: 1;
+    opacity: .5;
 }
