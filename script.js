@@ -1,7 +1,4 @@
 /**
- * Created by sloan on 12/12/2016.
- */
-/**
  * Main app entry point
  */
 $(document).ready(function(){
@@ -26,7 +23,7 @@ $(document).ready(function(){
     });
     navigator.geolocation.getCurrentPosition(function(position) {   // gets starting location to be used to determine bearing
         starting_location=position.coords;
-    });
+    },handleError);
     $('header').click(build_page1);
 });
 
@@ -54,6 +51,7 @@ var image_array = [
     {image: 'wendys.jpg',
      name: "Wendy's"}
 ];
+
 /**
  * Build the initial page
  */
@@ -86,7 +84,6 @@ function build_page1 () {
             "src": "images/" + image_array[x].image,
             "class": "img-circle"
         });
-
         $('[data-imgindex=' + x + ']').append(img);//append each image into row html
     }
 
@@ -100,6 +97,7 @@ function build_page1 () {
     main_body.append(bottom_text);
     $('.textAtBottom').append(only_h1, first_h3, second_h3);
 }
+
 /**
  * Request the current location and build the second page
  * @param button The fast food restaurant that was selected
@@ -108,11 +106,12 @@ function build_page2(button) {
     navigator.geolocation.getCurrentPosition(function(position) {
         direction = set_direction(position);
         build_page2_1(direction, button);
-    });
+    },handleError);
 }
+
 /**
  * Build the second page
- * @param bearing The direction
+ * @param bearing The direction the user is travelling
  * @param button The fast food restaurant that was selected
  */
 function build_page2_1(bearing, button) {
@@ -144,6 +143,7 @@ function build_page2_1(bearing, button) {
     map.setCenter(location);
     my_places.search(food_name, location, bearing);
 }
+
 /**
  * Get the bearing based on an initial and secondary location
  * @param position The current position
@@ -159,21 +159,19 @@ function set_direction(position) {
     var long_diff = next_long - starting_long;
     var lat_diff = next_lat - starting_lat;
 
-    //console.log("Differences " + long_diff, lat_diff);
-    //var bearing = Math.tan(long_diff / lat_diff);
+    // var bearing = Math.tan(long_diff / lat_diff);             // older, less accurate bearing calculation
     var bearing = Math.atan2(lat_diff,long_diff) * (180 / Math.PI);
-    //console.log('bearing is '+ bearing);
     if (isNaN(bearing)) {
         return 0;
     }
     return bearing;
 }
+
 /**
  * View a youtube ad for the fast food restaurant
  * @param button The fast food restaurant that was selected
  */
 function view_youtube_ads(button) {//whenever the "other content" button clicked whole page 2 hide and display page3
-    //console.log('hello');
     $.ajax({
         dataType: 'json',
         method: 'POST',
@@ -192,7 +190,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
                 "class" : "modal-title",
                 "text":result.video[0].title
             });
-            //console.log('AJAX Success function called, with the following result:', result);
+
             //modal area
             $('.modal-body *').remove();
             $('.modal-header h3').remove();
@@ -208,6 +206,7 @@ function view_youtube_ads(button) {//whenever the "other content" button clicked
         }
     });
 }
+
 /**
  * Play video on modal show
  * @param source The source url
@@ -216,4 +215,26 @@ function autoPlayYouTubeModal(source) {
         var theModal = $('#myModal iframe'),
             videoSRCauto = source + "?autoplay=1";
         $(theModal).attr('src', videoSRCauto);
+}
+
+/**
+ * Displays the error msg if GPS not working.
+ * @param error
+ */
+function handleError(error) {
+    var errDiv = document.getElementById('error');
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            errDiv.innerHTML = "ERROR<br>User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            errDiv.innerHTML = "ERROR<br>Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            errDiv.innerHTML = "ERROR<br>The request to get user location timed out.";
+            break;
+        case error.UNKNOWN_ERROR:
+            errDiv.innerHTML = "ERROR<br>An unknown error occurred.";
+            break;
+    }
 }
