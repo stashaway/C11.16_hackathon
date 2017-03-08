@@ -1,40 +1,16 @@
-# C11_Hackathon
-Hackathon project involving the combination of different data sources into an application or game
+# Find Food Fast
 
-### Requirements
-- Combine at least 3 **external** resources via AJAX requests and present their information in an application
-- Must be documented loosely on JSDOC standards
-- Must be issue-managed via meistertask
-- Should encorporate <a href="https://www.google.com/design/spec/material-design/introduction.html" target="_blank">Google Material standards</a>
+This application addresses a dilemna facing drivers everywhere- The need to find something to eat without getting distracted by the phone. This app gets your location upon load, then presents the user several food options. When the driver clicks a food option, FFF get their locations again and uses the two locations to determine a bearing or direction of travel. It then uses AJAX to query the Google Maps and Places APIs and find the nearby restaurants. However, instead of displaying the one closest like most other apps, it displays the closest one in the direction the user is travelling. It also automatically centers and zooms the map to show the user directions. In addition, it can display results in the opposite direction as well as play commericals from the restaurant chosen from YouTube.
 
-### Judging Criteria
-- **Appeal** : is it visually appealing / well put together
-- **Code Quality** : is the code properly formatted, are variables and functions well defined and documented
-- **Presentation** : How well is it presented during the unveiling session
-- **Task / Issue Management** : How well was the development process documented / controlled.  Were there well-defined issues, milestones, and project management
-- **Innovative / Transformative** : Did the project do something new and exciting?  Was it bold and tried to do things that haven't been done much.  Did it combine the data sources together in a way that was more useful than either source by itself
-- **Ease of Use / Understanding** : Was it easy to use the application / game, or if it was more complex, was the application or game able to provide you with tutorials or instructions that made understanding it a breeze.
+This application was developed during a two day hackathon with 3 other developers- Brian Ault, Cung Tran, and Patrick McMahon.
 
-### Teams
-- Team 1:
-  - Miles
-  - Vernon
-  - Mike
-  - Sean G
-  - Mentor: Wade
-- Team 2: 
-  - Brian
-  - Patrick
-  - Cung
-  - Sloan
-  - Mentor: Kevin
-- Team 3:
-  - Jason
-  - Tammy
-  - Sean D
-  - Ryan Moy
-  - Mentor: Danh
+## Technologies Used
 
-### Deadline: 
-- 6:00PM Tuesday, December 13th, 2016
-
+* AJAX
+* Google Places API
+* Google Maps API
+* Youtube API
+* Geolocation
+* Javascript
+* jQuery
+* HTML5 / CSS3
