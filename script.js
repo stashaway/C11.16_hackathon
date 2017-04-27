@@ -80,9 +80,9 @@ function build_page1 () {
     }
 
     for (var x = 0; x < image_array.length; x++) {
-        var img = $("<img>", {
+        var img = $("<image>", {
             "src": "images/" + image_array[x].image,
-            "class": "img-circle"
+            "class": "image-circle"
         });
         $('[data-imgindex=' + x + ']').append(img);//append each image into row html
     }
