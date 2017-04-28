@@ -80,7 +80,7 @@ function build_page1 () {
     }
 
     for (var x = 0; x < image_array.length; x++) {
-        var img = $("<image>", {
+        var img = $("<img>", {
             "src": "images/" + image_array[x].image,
             "class": "image-circle"
         });
